@@ -1,0 +1,488 @@
+{
+  "title": "Diseño en juego",
+  "subtitle": "Un giro. Una pregunta. Una idea más.",
+  "instagramUrl": "https://www.instagram.com/idojaestudiografico/",
+  "logoUrl": "",
+  "categories": [
+    {
+      "id": "graphic",
+      "name": "Diseño gráfico",
+      "color": "#53b99d",
+      "icon": "Aa",
+      "questions": [
+        {
+          "text": "¿Qué modelo de color se utiliza habitualmente para impresión?",
+          "options": [
+            "CMYK",
+            "RGB"
+          ],
+          "answer": 0,
+          "explanation": "CMYK combina tintas cian, magenta, amarilla y negra para imprimir."
+        },
+        {
+          "text": "¿Qué es el kerning?",
+          "options": [
+            "El espacio entre líneas",
+            "El ajuste entre pares de letras"
+          ],
+          "answer": 1,
+          "explanation": "El kerning ajusta la separación de pares concretos de caracteres."
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "name": "Arquitectura",
+      "color": "#cee7dc",
+      "icon": "⌂",
+      "questions": [
+        {
+          "text": "¿Qué elemento transmite las cargas de un edificio al terreno?",
+          "options": [
+            "La cimentación",
+            "La carpintería"
+          ],
+          "answer": 0,
+          "explanation": "La cimentación distribuye las cargas de la estructura al terreno."
+        },
+        {
+          "text": "¿Qué representa una planta arquitectónica?",
+          "options": [
+            "Una vista aérea sin cortes",
+            "Un corte horizontal del edificio"
+          ],
+          "answer": 1,
+          "explanation": "La planta muestra la distribución mediante un corte horizontal."
+        }
+      ]
+    },
+    {
+      "id": "interiors",
+      "name": "Diseño de interiores",
+      "color": "#9ecfbd",
+      "icon": "▧",
+      "questions": [
+        {
+          "text": "¿Qué busca la ergonomía al diseñar un espacio?",
+          "options": [
+            "Adaptarlo a las personas",
+            "Priorizar solo la apariencia"
+          ],
+          "answer": 0,
+          "explanation": "La ergonomía considera comodidad, seguridad y uso humano del espacio."
+        },
+        {
+          "text": "¿Cuál es un ejemplo de iluminación de tarea?",
+          "options": [
+            "Una lámpara de lectura",
+            "Una luz puramente decorativa"
+          ],
+          "answer": 0,
+          "explanation": "La iluminación de tarea facilita una actividad específica, como leer."
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "name": "Cultura del diseño",
+      "color": "#e5e2d9",
+      "icon": "✳",
+      "questions": [
+        {
+          "text": "¿En qué país se fundó la escuela Bauhaus?",
+          "options": [
+            "Italia",
+            "Alemania"
+          ],
+          "answer": 1,
+          "explanation": "La Bauhaus fue fundada en Weimar, Alemania, en 1919."
+        },
+        {
+          "text": "¿Qué disciplina se relaciona con Charles y Ray Eames?",
+          "options": [
+            "Diseño de mobiliario",
+            "Astronomía"
+          ],
+          "answer": 0,
+          "explanation": "Charles y Ray Eames son referentes del diseño de mobiliario moderno."
+        }
+      ]
+    },
+    {
+      "id": "lightning",
+      "name": "Desafío relámpago",
+      "color": "#7cc4af",
+      "icon": "ϟ",
+      "questions": [
+        {
+          "text": "¿Cuál de estas formas tiene tres lados?",
+          "options": [
+            "Triángulo",
+            "Hexágono"
+          ],
+          "answer": 0,
+          "explanation": "Un triángulo tiene tres lados; un hexágono tiene seis."
+        },
+        {
+          "text": "¿Qué herramienta sirve para dibujar circunferencias?",
+          "options": [
+            "Escuadra",
+            "Compás"
+          ],
+          "answer": 1,
+          "explanation": "El compás permite trazar circunferencias de un radio determinado."
+        }
+      ]
+    },
+    {
+      "id": "expert",
+      "name": "Nivel experto",
+      "color": "#b7dacc",
+      "icon": "◇",
+      "questions": [
+        {
+          "text": "En tipografía, ¿qué es una contraforma?",
+          "options": [
+            "El espacio interior de una letra",
+            "El grosor de su trazo"
+          ],
+          "answer": 0,
+          "explanation": "La contraforma es el espacio vacío interior, abierto o cerrado, de un carácter."
+        },
+        {
+          "text": "¿Cuál de estos elementos trabaja principalmente a tracción?",
+          "options": [
+            "Un cable suspendido",
+            "Una columna de hormigón"
+          ],
+          "answer": 0,
+          "explanation": "Un cable resiste tracción; una columna trabaja principalmente a compresión."
+        }
+      ]
+    }
+  ],
+  "slogan": "convierto tus entregas en trabajos profesionales",
+  "careers": [
+    {
+      "id": "all",
+      "name": "Todas las carreras"
+    },
+    {
+      "id": "graphic",
+      "name": "Diseño gráfico"
+    },
+    {
+      "id": "architecture",
+      "name": "Arquitectura"
+    },
+    {
+      "id": "interiors",
+      "name": "Diseño de interiores"
+    }
+  ],
+  "facts": [
+    "El kerning ajusta el espacio entre dos letras. Pequeños cambios pueden mejorar mucho la lectura.",
+    "Una planta arquitectónica representa un corte horizontal del edificio, no simplemente una vista desde arriba.",
+    "CMYK utiliza cuatro tintas: cian, magenta, amarillo y negro. RGB combina luz para las pantallas.",
+    "La ergonomía adapta los objetos y espacios a las personas que los usan.",
+    "En una escala 1:100, un centímetro en el plano representa un metro en la realidad.",
+    "Una imagen vectorial puede ampliarse sin perder nitidez: sus formas se describen matemáticamente.",
+    "La luz de tarea ilumina una actividad concreta, como dibujar, leer o estudiar.",
+    "El espacio en blanco también diseña: ayuda a separar, ordenar y dar protagonismo al contenido."
+  ],
+  "careerQuestions": {
+    "graphic": {
+      "graphic": [
+        {
+          "text": "¿Qué modelo de color se utiliza habitualmente para impresión?",
+          "options": [
+            "CMYK",
+            "RGB"
+          ],
+          "answer": 0,
+          "explanation": "CMYK combina tintas cian, magenta, amarilla y negra para imprimir."
+        },
+        {
+          "text": "¿Qué es el kerning?",
+          "options": [
+            "El espacio entre líneas",
+            "El ajuste entre pares de letras"
+          ],
+          "answer": 1,
+          "explanation": "El kerning ajusta la separación de pares concretos de caracteres."
+        }
+      ],
+      "architecture": [
+        {
+          "text": "¿Qué es una retícula en una composición gráfica?",
+          "options": [
+            "Una estructura para ordenar elementos",
+            "Un efecto de desenfoque"
+          ],
+          "answer": 0,
+          "explanation": "Una retícula ayuda a alinear y distribuir textos e imágenes."
+        }
+      ],
+      "interiors": [
+        {
+          "text": "¿Qué ayuda a leer un cartel a distancia?",
+          "options": [
+            "Buen contraste y jerarquía",
+            "Muchos textos pequeños"
+          ],
+          "answer": 0,
+          "explanation": "El contraste y una jerarquía clara facilitan identificar el mensaje principal."
+        }
+      ],
+      "culture": [
+        {
+          "text": "¿En qué país se fundó la escuela Bauhaus?",
+          "options": [
+            "Italia",
+            "Alemania"
+          ],
+          "answer": 1,
+          "explanation": "La Bauhaus fue fundada en Weimar, Alemania, en 1919."
+        }
+      ],
+      "lightning": [
+        {
+          "text": "¿Qué formato puede guardar gráficos vectoriales?",
+          "options": [
+            "SVG",
+            "JPG"
+          ],
+          "answer": 0,
+          "explanation": "SVG describe formas vectoriales; JPG guarda una imagen de píxeles."
+        }
+      ],
+      "expert": [
+        {
+          "text": "En tipografía, ¿qué es una contraforma?",
+          "options": [
+            "El espacio interior de una letra",
+            "El grosor de su trazo"
+          ],
+          "answer": 0,
+          "explanation": "La contraforma es el espacio vacío interior, abierto o cerrado, de un carácter."
+        }
+      ]
+    },
+    "architecture": {
+      "graphic": [
+        {
+          "text": "¿Para qué sirve la jerarquía de líneas en un plano?",
+          "options": [
+            "Para distinguir elementos y cortes",
+            "Para usar siempre el mismo grosor"
+          ],
+          "answer": 0,
+          "explanation": "Los grosores y tipos de línea ayudan a interpretar la información del plano."
+        }
+      ],
+      "architecture": [
+        {
+          "text": "¿Qué elemento transmite las cargas de un edificio al terreno?",
+          "options": [
+            "La cimentación",
+            "La carpintería"
+          ],
+          "answer": 0,
+          "explanation": "La cimentación distribuye las cargas de la estructura al terreno."
+        },
+        {
+          "text": "¿Qué representa una planta arquitectónica?",
+          "options": [
+            "Una vista aérea sin cortes",
+            "Un corte horizontal del edificio"
+          ],
+          "answer": 1,
+          "explanation": "La planta muestra la distribución mediante un corte horizontal."
+        }
+      ],
+      "interiors": [
+        {
+          "text": "¿Qué debe considerar la circulación de un espacio?",
+          "options": [
+            "El paso cómodo de las personas",
+            "Solo el color de las paredes"
+          ],
+          "answer": 0,
+          "explanation": "La circulación organiza recorridos y conexiones entre los espacios."
+        }
+      ],
+      "culture": [
+        {
+          "text": "¿En qué país se fundó la escuela Bauhaus?",
+          "options": [
+            "Italia",
+            "Alemania"
+          ],
+          "answer": 1,
+          "explanation": "La Bauhaus fue fundada en Weimar, Alemania, en 1919."
+        }
+      ],
+      "lightning": [
+        {
+          "text": "En escala 1:100, ¿qué representa 1 cm?",
+          "options": [
+            "1 metro",
+            "100 metros"
+          ],
+          "answer": 0,
+          "explanation": "La escala reduce las medidas reales cien veces: 1 cm equivale a 100 cm reales."
+        }
+      ],
+      "expert": [
+        {
+          "text": "¿Cuál de estos elementos trabaja principalmente a tracción?",
+          "options": [
+            "Un cable suspendido",
+            "Una columna de hormigón"
+          ],
+          "answer": 0,
+          "explanation": "Un cable resiste tracción; una columna trabaja principalmente a compresión."
+        }
+      ]
+    },
+    "interiors": {
+      "graphic": [
+        {
+          "text": "¿Para qué se utiliza un moodboard?",
+          "options": [
+            "Para reunir referencias visuales",
+            "Para calcular cargas estructurales"
+          ],
+          "answer": 0,
+          "explanation": "Un moodboard reúne referencias de colores, materiales y atmósferas."
+        }
+      ],
+      "architecture": [
+        {
+          "text": "¿Qué representa una planta arquitectónica?",
+          "options": [
+            "Una vista aérea sin cortes",
+            "Un corte horizontal del edificio"
+          ],
+          "answer": 1,
+          "explanation": "La planta muestra la distribución mediante un corte horizontal."
+        }
+      ],
+      "interiors": [
+        {
+          "text": "¿Qué busca la ergonomía al diseñar un espacio?",
+          "options": [
+            "Adaptarlo a las personas",
+            "Priorizar solo la apariencia"
+          ],
+          "answer": 0,
+          "explanation": "La ergonomía considera comodidad, seguridad y uso humano del espacio."
+        },
+        {
+          "text": "¿Cuál es un ejemplo de iluminación de tarea?",
+          "options": [
+            "Una lámpara de lectura",
+            "Una luz puramente decorativa"
+          ],
+          "answer": 0,
+          "explanation": "La iluminación de tarea facilita una actividad específica, como leer."
+        }
+      ],
+      "culture": [
+        {
+          "text": "¿Qué disciplina se relaciona con Charles y Ray Eames?",
+          "options": [
+            "Diseño de mobiliario",
+            "Astronomía"
+          ],
+          "answer": 0,
+          "explanation": "Charles y Ray Eames son referentes del diseño de mobiliario moderno."
+        }
+      ],
+      "lightning": [
+        {
+          "text": "¿Qué puede aportar una alfombra a un interior?",
+          "options": [
+            "Absorción de parte del sonido",
+            "Aislamiento acústico total garantizado"
+          ],
+          "answer": 0,
+          "explanation": "Los materiales blandos pueden absorber sonido, pero no garantizan aislamiento total."
+        }
+      ],
+      "expert": [
+        {
+          "text": "¿Qué describe la temperatura de color de una lámpara?",
+          "options": [
+            "La apariencia cálida o fría de su luz",
+            "El calor que emite la bombilla"
+          ],
+          "answer": 0,
+          "explanation": "Se expresa en kelvin y describe el aspecto cromático de la luz."
+        }
+      ]
+    }
+  },
+  "prizes": [
+    {
+      "name": "Pack de stickers",
+      "id": "stickers",
+      "color": "#53b99d",
+      "lines": [
+        "Pack de",
+        "stickers"
+      ]
+    },
+    {
+      "name": "Impresión A3",
+      "id": "a3",
+      "color": "#cee7dc",
+      "lines": [
+        "Impresión",
+        "A3"
+      ]
+    },
+    {
+      "name": "10% de descuento",
+      "id": "discount10",
+      "color": "#9ecfbd",
+      "lines": [
+        "10% de",
+        "descuento"
+      ]
+    },
+    {
+      "name": "Separador de diseño",
+      "id": "bookmark",
+      "color": "#e5e2d9",
+      "lines": [
+        "Separador",
+        "de diseño"
+      ]
+    },
+    {
+      "name": "Lámina A4",
+      "id": "a4",
+      "color": "#7cc4af",
+      "lines": [
+        "Lámina",
+        "A4"
+      ]
+    },
+    {
+      "name": "20% de descuento",
+      "id": "discount20",
+      "color": "#b7dacc",
+      "lines": [
+        "20% de",
+        "descuento"
+      ]
+    }
+  ],
+  "prizesAreExamples": true,
+  "studentOffer": {
+    "details": "Un beneficio para estudiantes UAI. Consulta vigencia y condiciones en el stand.",
+    "title": "¿Estudias en la UAI?",
+    "benefit": "10% de descuento"
+  }
+}
