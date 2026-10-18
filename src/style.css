@@ -82,3 +82,25 @@ body,.app-shell{color:var(--idoja-dark);background:#f7f8f7}.primary,.wheel-cente
 @media(max-width:640px){.question-overlay{padding:8px}.question-content h2{font-size:21px}.question-content .answers button{font-size:17px;padding:12px;gap:10px}.question-content .prize-at-stake{font-size:12px}.header-actions{gap:6px}.motion-toggle{font-size:10px;padding:6px}.event-tag{display:none}}
 
 @media(max-height:740px){.is-result .question-category{display:none}.is-result .question-content{gap:8px}.is-result .question-content h2{font-size:25px}.is-result .awarded-prize{font-size:25px}.is-result .claim-prize{font-size:16px}.is-result .answer-reveal,.is-result .explanation-card .explanation{font-size:16px}.is-result .student-offer{padding:8px 12px}.is-result .result-actions .primary{padding:10px 16px;min-height:40px}}
+
+/* Spotlight repositions the existing wheel and mascot, never a second draw. */
+.spotlight-active::before{content:"";position:fixed;inset:0;background:#123d34cc;backdrop-filter:blur(5px);z-index:40}
+.spotlight-active>.app-header,.spotlight-active>.app-footer{position:relative;z-index:60;background:#f7f8f7;border-radius:12px;padding:8px 14px}
+.spotlight-active>.app-header{grid-row:1}.spotlight-active>.app-footer{grid-row:3}
+.game-layout.is-spotlight{position:fixed;inset:112px 4vw 76px;z-index:50;display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,27%);gap:24px;background:radial-gradient(ellipse at 35% 45%,#fff 0%,#e5f5ed 75%);border:2px solid #8dd1b8;border-radius:30px;padding:22px;box-shadow:0 30px 100px #001c3270;animation:spotlight-arrive .35s ease-out both}
+@keyframes spotlight-arrive{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.is-spotlight .play-area{display:block;padding:0;background:transparent;border:0;box-shadow:none;overflow:visible}
+.is-spotlight .game-steps,.is-spotlight .play-heading,.is-spotlight .spin-controls,.is-spotlight .probability-notice,.is-spotlight .category-legend{display:none}
+.is-spotlight .wheel-screen{display:block;height:100%}
+.is-spotlight .wheel-stage{display:flex;flex-direction:column;justify-content:center;gap:18px;container-type:normal;height:100%;overflow:visible}
+.is-spotlight .wheel-frame{width:min(52vw,calc(100dvh - 300px),680px);height:auto;aspect-ratio:1;flex-shrink:0}
+.spotlight-copy{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:clamp(17px,1.5vw,27px);font-weight:600;line-height:1.2;color:#22503e;min-height:65px;justify-content:center}
+.spotlight-copy strong{font-family:Arial,sans-serif;font-size:clamp(25px,2.3vw,42px);font-weight:700;color:#196b4c;overflow-wrap:anywhere}
+.is-spotlight .plotty-panel{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;padding:0;min-height:0;min-width:0}
+.is-spotlight .plotty-title{display:none}
+.is-spotlight .speech-bubble{width:100%;max-width:340px;padding:20px;border:2px solid #8bcbb1;background:white;flex:none}
+.is-spotlight .speech-bubble .host-speech{font-family:Arial,sans-serif;font-size:clamp(22px,2vw,34px);font-weight:700;line-height:1.25;text-align:center;margin:0;min-height:0}
+.is-spotlight .plotty{width:100%;height:auto;max-width:340px;max-height:40dvh;object-fit:contain;padding:0;flex:0 1 auto}
+@media(max-height:740px) and (min-width:761px){.game-layout.is-spotlight{inset:92px 3vw 62px;padding:14px;gap:18px}.is-spotlight .wheel-stage{gap:10px}.is-spotlight .wheel-frame{width:min(49vw,calc(100dvh - 240px))}.spotlight-copy{min-height:45px;font-size:17px}.spotlight-copy strong{font-size:25px}.is-spotlight .plotty{max-height:35dvh}.is-spotlight .speech-bubble{padding:14px}.is-spotlight .speech-bubble .host-speech{font-size:23px}}
+@media(max-width:760px){.game-layout.is-spotlight{inset:104px 10px 62px;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:10px;padding:14px;border-radius:20px}.is-spotlight .wheel-stage{gap:10px}.is-spotlight .wheel-frame{width:min(72vw,calc(100dvh - 390px));max-width:420px}.spotlight-copy{min-height:48px;font-size:16px}.spotlight-copy strong{font-size:24px}.is-spotlight .plotty-panel{flex-direction:row;gap:12px;max-height:110px;justify-content:center}.is-spotlight .plotty{max-width:125px;max-height:105px;order:2}.is-spotlight .speech-bubble{max-width:230px;padding:12px}.is-spotlight .speech-bubble .host-speech{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.app-shell:not(.motion-enabled) .game-layout.is-spotlight{animation:none;transform:none}}

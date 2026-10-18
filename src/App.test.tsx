@@ -8,10 +8,10 @@ async function choose(name = 'Diseño gráfico') { fireEvent.click(await screen.
 async function question() { fireEvent.click(screen.getByRole('button', { name: /Girar la ruleta/ })); await screen.findByRole('heading', { level: 2 }); }
 const first = () => data.categories[0].questions[0];
 test('career comes first and seven prizes follow', async () => { render(<App />); await screen.findByRole('heading', { name: '¿Qué carrera estudias?' }); expect(screen.queryByRole('button', { name: /Girar la ruleta/ })).toBeNull(); expect(screen.getByRole('button', { name: /Continuar/ }).hasAttribute('disabled')).toBe(true); expect(screen.getByText(/Un intento por persona/)).toBeTruthy(); await choose(); expect(screen.getAllByTestId('prize')).toHaveLength(7); });
-test.each([0, 1])('answer %i shows correction and explanation without retries', async (answer) => { render(<App spinDuration={0}/>); await choose(); await question(); expect(screen.getByText('¡Por este premio… responde esta pregunta!')).toBeTruthy(); expect(screen.getByTestId('prize-at-stake').textContent).toContain(data.prizes[0].name); expect(screen.queryByTestId('plotty-fact')).toBeNull(); const buttons = screen.getAllByRole('button', { name: /^[AB] / }); fireEvent.click(buttons[answer]); expect(screen.getByTestId('answer-explanation').textContent).toContain(first().explanation); expect(screen.getByText(first().options[first().answer]).parentElement?.textContent).toContain('La respuesta correcta'); expect(Boolean(screen.queryByTestId('awarded-prize'))).toBe(answer === first().answer); expect(screen.queryByRole('button', { name: /Volver a la ruleta/ })).toBeNull(); expect(screen.getByRole('button', { name: /Siguiente participante/ })).toBe(document.activeElement); if (answer === first().answer)
+test.each([0, 1])('answer %i shows correction and explanation without retries', async (answer) => { render(<App spinDuration={0} revealDuration={0}/>); await choose(); await question(); expect(screen.getByText('¡Por este premio… responde esta pregunta!')).toBeTruthy(); expect(screen.getByTestId('prize-at-stake').textContent).toContain(data.prizes[0].name); expect(screen.queryByTestId('plotty-fact')).toBeNull(); const buttons = screen.getAllByRole('button', { name: /^[AB] / }); fireEvent.click(buttons[answer]); expect(screen.getByTestId('answer-explanation').textContent).toContain(first().explanation); expect(screen.getByText(first().options[first().answer]).parentElement?.textContent).toContain('La respuesta correcta'); expect(Boolean(screen.queryByTestId('awarded-prize'))).toBe(answer === first().answer); expect(screen.queryByRole('button', { name: /Volver a la ruleta/ })).toBeNull(); expect(screen.getByRole('button', { name: /Siguiente participante/ })).toBe(document.activeElement); if (answer === first().answer)
     expect(screen.getByText(/Retira tu premio en el stand/)).toBeTruthy(); fireEvent.click(screen.getByRole('button', { name: /Siguiente participante/ })); expect(screen.getByRole('heading', { name: '¿Qué carrera estudias?' })).toBeTruthy(); });
-test.each(['Diseño gráfico', 'Arquitectura', 'Diseño de interiores', 'Otra carrera'])('restricts questions for %s', async (name) => { render(<App spinDuration={0}/>); await choose(name); await question(); const career = data.careers.find(c => c.name === name)!; const eligible = data.careerCategories[career.id as keyof typeof data.careerCategories]; const expected = data.categories.find(c => eligible.includes(c.id))!.questions[0]; expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(expected.text); });
-test.each([0, 1, 2, 3, 4, 5, 6])('weighted draw and pointer align for prize %i', async (index) => { const preceding = data.prizes.slice(0, index).reduce((sum, p) => sum + p.weight, 0); const random = (preceding + .01) / 100; expect(drawPrize(data.prizes, random)).toBe(index); vi.mocked(Math.random).mockReturnValueOnce(random).mockReturnValue(0); const { container } = render(<App spinDuration={0}/>); await choose(); fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/})); const rotation = Number((container.querySelector('.wheel') as SVGElement).style.transform.match(/[\d.]+/)![0]); expect((rotation + (index + .5) * 360 / 7) / 360).toBeCloseTo(Math.round((rotation + (index + .5) * 360 / 7) / 360)); expect((await screen.findByTestId('prize-at-stake')).textContent).toContain(data.prizes[index].name); });
+test.each(['Diseño gráfico', 'Arquitectura', 'Diseño de interiores', 'Otra carrera'])('restricts questions for %s', async (name) => { render(<App spinDuration={0} revealDuration={0}/>); await choose(name); await question(); const career = data.careers.find(c => c.name === name)!; const eligible = data.careerCategories[career.id as keyof typeof data.careerCategories]; const expected = data.categories.find(c => eligible.includes(c.id))!.questions[0]; expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(expected.text); });
+test.each([0, 1, 2, 3, 4, 5, 6])('weighted draw and pointer align for prize %i', async (index) => { const preceding = data.prizes.slice(0, index).reduce((sum, p) => sum + p.weight, 0); const random = (preceding + .01) / 100; expect(drawPrize(data.prizes, random)).toBe(index); vi.mocked(Math.random).mockReturnValueOnce(random).mockReturnValue(0); const { container } = render(<App spinDuration={0} revealDuration={0}/>); await choose(); fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/})); const rotation = Number((container.querySelector('.wheel') as SVGElement).style.transform.match(/[\d.]+/)![0]); expect((rotation + (index + .5) * 360 / 7) / 360).toBeCloseTo(Math.round((rotation + (index + .5) * 360 / 7) / 360)); expect((await screen.findByTestId('prize-at-stake')).textContent).toContain(data.prizes[index].name); });
 test('weight boundaries and invalid configuration', () => { expect(drawPrize(data.prizes, 0)).toBe(0); expect(drawPrize(data.prizes, .30)).toBe(1); expect(drawPrize(data.prizes, .999999)).toBe(6); expect(() => validateData({ ...data, prizes: data.prizes.map((p, i) => ({ ...p, weight: i ? p.weight : 0 })) })).toThrow(); expect(() => validateData({ ...data, prizes: data.prizes.map(p => ({ ...p, weight: p.id === 'phoneholder' ? 3 : p.weight })) })).toThrow(); expect(() => validateData({ ...data, careerCategories: { all: ['missing'] } })).toThrow(); expect(() => validateData({ ...data, prizes: [] })).toThrow(); });
 test.each([false, true])('duration and reset respect reduced motion %s', async (reduced) => { const previous = window.matchMedia; window.matchMedia = vi.fn().mockReturnValue({ matches: reduced }); try {
     const { container } = render(<App />);
@@ -23,6 +23,7 @@ test.each([false, true])('duration and reset respect reduced motion %s', async (
     act(() => vi.advanceTimersByTime(duration - 1));
     expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
     act(() => vi.advanceTimersByTime(1));
+    act(() => vi.advanceTimersByTime(1500));
     expect(screen.getByRole('heading', { level: 2 })).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: /Reiniciar/ }));
     fireEvent.click(screen.getByRole('button', { name: /^Diseño gráfico/ }));
@@ -39,7 +40,7 @@ test('Instagram remains optional with local QR and legacy prize defaults', async
 
 
 test.each([true, false])('celebration appears only for a win: %s', async (win) => {
-  const { container } = render(<App spinDuration={0}/>);
+  const { container } = render(<App spinDuration={0} revealDuration={0}/>);
   await choose();
   await question();
   expect(screen.queryByTestId('confetti')).toBeNull();
@@ -85,7 +86,7 @@ test('Plotty leaves 25 seconds to read each fact', async () => {
 });
 
 test('normal spin uses three full turns plus alignment', async () => {
-  const {container} = render(<App spinDuration={0}/>);
+  const {container} = render(<App spinDuration={0} revealDuration={0}/>);
   await choose();
   fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
   const rotation = Number((container.querySelector('.wheel') as SVGElement).style.transform.match(/[\d.]+/)![0]);
@@ -95,7 +96,7 @@ test('normal spin uses three full turns plus alignment', async () => {
 
 
 test('question replaces wheel rather than overlapping it', async () => {
-  const {container}=render(<App spinDuration={0}/>);
+  const {container}=render(<App spinDuration={0} revealDuration={0}/>);
   await choose(); await question();
   expect(container.querySelector('.wheel-screen')).toBeNull();
   expect(container.querySelector('.question-overlay')).toBeTruthy();
@@ -112,4 +113,60 @@ test('reduced-motion users can explicitly enable game effects', async () => {
     fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
     expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe('9000ms');
   } finally {window.matchMedia=previous;}
+});
+
+
+test('spotlight reuses wheel and Plotty, then reveals the prize for 1500ms', async () => {
+  const {container}=render(<App/>);
+  await choose();
+  const wheel=container.querySelector('.wheel');
+  const mascot=container.querySelector('.plotty');
+  vi.useFakeTimers();
+  fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
+  expect(container.querySelector('.game-layout.is-spotlight')).toBeTruthy();
+  expect(container.querySelector('.wheel')).toBe(wheel);
+  expect(container.querySelector('.plotty')).toBe(mascot);
+  expect(screen.getByTestId('plotty-speech').textContent).toBe('\u00a1Vamos por ese premio!');
+  expect(screen.queryByTestId('plotty-fact')).toBeNull();
+  expect(screen.queryByRole('link',{name:/Instagram/})).toBeNull();
+  const calls=vi.mocked(Math.random).mock.calls.length;
+  act(()=>vi.advanceTimersByTime(9000));
+  expect(screen.getByTestId('prize-reveal').textContent).toContain(data.prizes[0].name);
+  expect(screen.queryByRole('heading',{level:2})).toBeNull();
+  fireEvent.click(container.querySelector('.wheel-center')!);
+  expect(vi.mocked(Math.random).mock.calls.length).toBe(calls);
+  act(()=>vi.advanceTimersByTime(1499));
+  expect(screen.queryByRole('heading',{level:2})).toBeNull();
+  act(()=>vi.advanceTimersByTime(1));
+  expect(screen.getByTestId('prize-at-stake').textContent).toContain(data.prizes[0].name);
+  expect(container.querySelector('.is-spotlight')).toBeNull();
+});
+
+test.each([100,9100])('reset cancels spotlight timers at %ims', async (elapsed)=>{
+  const {container}=render(<App/>);
+  await choose();
+  vi.useFakeTimers();
+  fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
+  act(()=>vi.advanceTimersByTime(elapsed));
+  fireEvent.click(screen.getByRole('button',{name:/Reiniciar/}));
+  act(()=>vi.advanceTimersByTime(20000));
+  expect(screen.getByRole('heading',{name:'\u00bfQu\u00e9 carrera estudias?'})).toBeTruthy();
+  expect(container.querySelector('.is-spotlight')).toBeNull();
+  expect(screen.queryByTestId('prize-reveal')).toBeNull();
+  expect(screen.queryByRole('heading',{level:2})).toBeNull();
+  expect(screen.getByTestId('score').textContent).toContain('0 aciertos / 0 jugadas');
+});
+
+
+test('unmount during prize reveal clears both timer sources', async ()=>{
+  const {unmount}=render(<App/>);
+  await choose();
+  vi.useFakeTimers();
+  fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
+  act(()=>vi.advanceTimersByTime(9000));
+  expect(screen.getByTestId('prize-reveal')).toBeTruthy();
+  unmount();
+  expect(vi.getTimerCount()).toBe(0);
+  act(()=>vi.advanceTimersByTime(20000));
+  expect(screen.queryByRole('heading',{level:2})).toBeNull();
 });

@@ -265,16 +265,18 @@ export function drawPrize(prizes: Prize[], random = Math.random()) {
 export default function App({
   spinDuration = 9000,
   factInterval = 25000,
+  revealDuration = 1500,
 }: {
   spinDuration?: number;
   factInterval?: number;
+  revealDuration?: number;
 }) {
   const [motionEnabled, setMotionEnabled] = useState(false);
   const reducedMotion = Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
   const [data, setData] = useState<EventData | null>(null);
   const [error, setError] = useState("");
   const [phase, setPhase] = useState<
-    "career" | "idle" | "spinning" | "question" | "result"
+    "career" | "idle" | "spinning" | "revealing" | "question" | "result"
   >("career");
   const [angle, setAngle] = useState(0);
   const [animationDuration, setAnimationDuration] = useState(spinDuration);
@@ -371,8 +373,11 @@ export default function App({
         ((target - (previous % 360) + 360) % 360),
     );
     timer.current = setTimeout(() => {
-      locked.current = false;
-      setPhase("question");
+      setPhase("revealing");
+      timer.current = setTimeout(() => {
+        locked.current = false;
+        setPhase("question");
+      }, revealDuration);
     }, duration);
   }
   function select(value: number) {
@@ -447,20 +452,23 @@ export default function App({
     all: { icon: "✳", description: "Preguntas generales de diseño" },
   };
   const questionOpen = phase === "question" || phase === "result";
+  const spotlight = phase === "spinning" || phase === "revealing";
   const hostSpeech =
     phase === "career"
       ? "¡Hola! Soy Plotty. Elige tu carrera y jugamos."
       : phase === "idle"
         ? "¡Todo listo! Pídeme que gire y busquemos tu premio."
         : phase === "spinning"
-          ? "¡Yo giro la ruleta! Veamos qué premio te toca…"
+          ? "¡Vamos por ese premio!"
+          : phase === "revealing"
+            ? `¡Está en juego: ${prize?.name}!`
           : phase === "question"
             ? `¡Puedes ganar ${prize?.name}! Yo pregunto, tú eliges la respuesta.`
             : correct
               ? `¡Bien hecho! Ganaste ${prize?.name}. ¡Gracias por jugar conmigo!`
               : "Esta vez no fue. ¡Gracias por jugar! Si estudias en la UAI, mira tu beneficio.";
   return (
-    <div className={`app-shell ${motionEnabled ? "motion-enabled" : ""}`}>
+    <div className={`app-shell ${motionEnabled ? "motion-enabled" : ""} ${spotlight ? "spotlight-active" : ""}`}>
       {phase === "result" && correct && (
         <div className="confetti" data-testid="confetti" aria-hidden="true">
           {Array.from({ length: 60 }, (_, i) => (
@@ -508,7 +516,7 @@ export default function App({
           {fullscreenError}
         </div>
       )}
-      <main className={`game-layout ${questionOpen ? "show-question" : ""}`}>
+      <main className={`game-layout ${questionOpen ? "show-question" : ""} ${spotlight ? "is-spotlight" : ""}`}>
         <section
           className="play-area"
           aria-label={
@@ -521,7 +529,7 @@ export default function App({
             </li>
             <li
               aria-current={
-                phase === "idle" || phase === "spinning" ? "step" : undefined
+                phase === "idle" || spotlight ? "step" : undefined
               }
             >
               <span>2</span> Tu premio
@@ -599,6 +607,9 @@ export default function App({
                 </button>
               </div>
               <div className="wheel-stage">
+                {spotlight && <div className="spotlight-copy" role="status">
+                  {phase === "revealing" ? <><span>¡Este premio está en juego!</span><strong data-testid="prize-reveal">{prize?.name}</strong></> : <span>Tu premio está en camino…</span>}
+                </div>}
                 <div
                   className={`wheel-frame ${phase === "spinning" ? "is-spinning" : ""}`}
                 >
@@ -839,7 +850,7 @@ export default function App({
             >
               {hostSpeech}
             </p>
-            {phase !== "spinning" && phase !== "question" && (
+            {!spotlight && phase !== "question" && (
               <div className="fact-block">
                 <span className="fact-label">¿SABÍAS QUE…?</span>
                 <p data-testid="plotty-fact">
@@ -867,7 +878,7 @@ export default function App({
                 : "Plotty, la mascota de IDOJA"
             }
           />
-          <div className="social-invite">
+          {!spotlight && <div className="social-invite">
             {data.instagramUrl && (
               <a
                 className="qr-panel"
@@ -882,7 +893,7 @@ export default function App({
             <p className="social-note">
               Seguirnos es opcional. No es un requisito para jugar.
             </p>
-          </div>
+          </div>}
         </aside>
       </main>
       <footer className="app-footer">
