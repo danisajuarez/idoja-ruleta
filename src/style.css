@@ -22,7 +22,7 @@ b,strong{font-weight:600}
 @keyframes plotty-cheer{0%,100%{transform:translateY(0)}45%{transform:translateY(-12px)}}
 @media(max-height:740px) and (min-width:641px){.speech-bubble .host-speech{font-size:13px;margin-bottom:8px}.fact-block{padding-top:8px}.fact-block p{font-size:11px;margin:6px 0}.speech-bubble{padding:12px}.social-note{font-size:8px}.student-offer{padding:9px 12px;gap:10px}.student-offer h3{font-size:15px}.student-offer p{font-size:10px}.is-result .question-content{gap:8px}.is-result h2{font-size:24px}.is-result .awarded-prize{font-size:25px}.plotty-panel.is-asking .fact-block p{font-size:11px}}
 @media(max-width:640px){.plotty-panel{padding:0;position:relative;grid-template-columns:minmax(0,1fr) 95px;gap:5px}.speech-bubble{padding:7px 10px;justify-content:flex-start}.speech-bubble .host-speech{font-size:9px;line-height:1.25;margin:0 30px 4px 0}.fact-block{padding-top:4px}.fact-block p,.plotty-panel.is-asking .fact-block p{font-size:8px;line-height:1.3;margin:3px 0}.fact-label{font-size:7px}.social-invite{position:absolute;right:0;bottom:0;width:93px;max-height:14px}.social-note{font-size:6px;line-height:1.2;background:#edf1eb}.plotty{padding-bottom:12px}.plotty-panel.is-asking .plotty{transform:scale(1.02);max-height:95px}.plotty-panel.is-asking .speech-bubble{padding:7px 10px}.student-offer{padding:6px 8px;gap:7px;border-radius:8px}.offer-badge{font-size:6px;max-width:40px;white-space:normal;line-height:1.3}.student-offer h3{font-size:10px}.student-offer p{font-size:8px;margin:2px 0 0}.is-result .question-content{gap:5px}.is-result h2{font-size:17px}.is-result .awarded-prize{font-size:20px}.is-result .explanation{font-size:9px}.is-result .answer-reveal{font-size:10px}}
-@media(prefers-reduced-motion:reduce){.plotty-panel .plotty{animation:none!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){.app-shell:not(.motion-enabled) .plotty-panel .plotty{animation:none!important;transform:none!important}}
 .plotty-panel.is-celebrating .plotty-thanks{max-height:48vh;object-fit:contain}
 @media(max-width:640px){.plotty-panel.is-celebrating .plotty-thanks{max-height:95px}}
 .answer-error{color:#9b3d2d;background:#f6e4dd;padding:7px 12px;border-radius:7px;letter-spacing:.6px}.explanation-card{padding:12px 16px;border-left:4px solid #5baf86;border-radius:0 9px 9px 0;background:#edf3e7;width:100%}.explanation-card h3{font-size:13px;font-weight:600;color:#316c4b;margin:0 0 5px}.explanation-card .explanation{font-size:clamp(15px,1.2vw,23px);line-height:1.4}.result-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%}.result-actions .primary{font-size:clamp(16px,1.4vw,25px);min-height:48px;padding:14px 20px}.next-participant{padding:14px 18px;min-height:48px}.is-result .question-content{gap:10px}
@@ -32,3 +32,53 @@ b,strong{font-weight:600}
 :root{color:#525252;background:#f7f8f7;--idoja-green:#4cb594;--idoja-dark:#525252;--idoja-gray:#999999}
 body,.app-shell{color:var(--idoja-dark);background:#f7f8f7}.primary,.wheel-center{background:var(--idoja-green);color:#173c31}.primary:hover:not(:disabled),.wheel-center:hover:not(:disabled){background:#3ba383}.pointer{background:var(--idoja-dark)}.question-overlay{background:#f7f8f7}.career-cards button[aria-pressed=true]{border-color:var(--idoja-green);background:#e5f3ee}.career-icon{color:var(--idoja-dark);background:#e5f3ee}.step-label,.fact-label,.question-category{color:var(--idoja-dark)}.wheel-screen{grid-template-rows:auto minmax(0,1fr) auto auto auto}.probability-notice{font-size:11px;line-height:1.4;text-align:center;color:#525252;margin:0}.attempt-notice{font-size:12px!important;color:#525252!important;margin:0!important}.claim-prize{font-size:clamp(14px,1.2vw,22px);margin:0}.sector-label{font-size:18px;fill:#263e35}.sector-number{fill:#525252}.app-footer{color:#525252}.question-content .prize-at-stake{display:flex;flex-direction:column;gap:5px;background:#e5f3ee;color:#525252;border-color:#4cb594}.question-content .prize-at-stake strong{color:#236c53}.plotty-panel.is-spinning .speech-bubble,.plotty-panel.is-asking .speech-bubble{box-shadow:none}.plotty-panel.is-spinning .plotty{animation:none}
 @media(max-width:640px){.probability-notice{font-size:8px}.attempt-notice{font-size:8px!important}.claim-prize{font-size:11px}.question-content .prize-at-stake{font-size:11px;padding:5px 8px}}
+
+/* Decorative effects never intercept game controls. */
+.confetti{position:fixed;inset:0;z-index:100;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-24px;border-radius:2px;opacity:0;animation:confetti-fall 3s ease-in forwards}
+@keyframes confetti-fall{0%{opacity:0;transform:translateY(-20px) rotate(0)}10%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateY(105vh) translateX(65px) rotate(680deg)}}
+.wheel-frame.is-spinning{box-shadow:0 0 0 7px #f5c95e,0 0 30px 12px #4cb59466;animation:wheel-glow 1.4s ease-in-out infinite alternate}
+@keyframes wheel-glow{from{box-shadow:0 0 0 7px #f5c95e,0 0 18px 5px #4cb59444}to{box-shadow:0 0 0 7px #4cb594,0 0 35px 12px #f5c95e77}}
+.plotty-panel.is-spinning .plotty{animation:plotty-cheer .9s ease-in-out infinite}
+.plotty-panel.is-winner .plotty{animation:plotty-cheer .65s ease-in-out 3}
+.is-result .awarded-prize{animation:prize-arrive .55s ease-out both}
+@keyframes prize-arrive{from{opacity:0;transform:translateY(12px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+.plotty-panel.is-encouraging .plotty{animation:plotty-nod .8s ease-in-out 1}
+@keyframes plotty-nod{0%,100%{transform:rotate(0)}50%{transform:rotate(3deg) translateY(3px)}}
+@media(prefers-reduced-motion:reduce){.app-shell:not(.motion-enabled) .confetti{display:none}.app-shell:not(.motion-enabled) .wheel-frame.is-spinning,.app-shell:not(.motion-enabled) .is-result .awarded-prize{animation:none}.app-shell:not(.motion-enabled) .plotty-panel .plotty{animation:none!important}}
+
+/* Slower, coordinated wheel motion and stacked brand signature. */
+.wheel,.sector-text{transition-timing-function:cubic-bezier(.25,.1,.25,1)}
+.brand-lockup{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+.brand-lockup .slogan{max-width:none;text-align:left;font-size:clamp(10px,.85vw,16px);line-height:1.3;color:#525252;display:block}
+.brand-lockup .brand-logo{object-position:left center}
+.sector-number{display:none}.sector-label{font-size:20px}
+@media(max-width:640px){.brand-lockup{max-width:65%;gap:3px}.brand-lockup .brand-logo{max-width:100%}.brand-lockup .slogan{font-size:9px}}
+
+/* Keep the question in normal flow: fixed overlays clipped long client copy. */
+:root{font-synthesis:weight}
+.play-area{grid-template-rows:auto minmax(0,1fr);background:#ffffff;border-color:#c5dfd5;box-shadow:0 12px 36px #174c3610}
+.question-overlay{position:relative;inset:auto;min-height:0;overflow-y:auto;display:flex;gap:12px;padding:18px 22px 22px;border-radius:16px;background:#fff}
+.question-category{flex-shrink:0;font-size:15px;padding-bottom:9px;line-height:1.4}
+.question-content{flex:0 0 auto;justify-content:flex-start;min-height:auto;gap:14px}
+.question-content h2{font-family:Arial,sans-serif;font-size:clamp(24px,2vw,38px);font-weight:700;line-height:1.22;letter-spacing:-.4px;max-width:none;color:#243f35}
+.question-content .step-label{font-size:11px;letter-spacing:1px;margin:0}
+.question-content .prize-at-stake{width:100%;padding:12px 16px;font-size:15px;flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center;border-radius:12px}
+.question-content .prize-at-stake strong{font-size:22px;line-height:1.2}
+.answers{gap:12px;margin:0}
+.question-content .answers button{font-family:Arial,sans-serif;font-size:clamp(19px,1.45vw,28px);font-weight:600;line-height:1.35;padding:18px;gap:16px;border:2px solid #c9ded4;border-radius:14px;color:#203e32;background:#f7fbf9;min-height:80px;overflow-wrap:anywhere}
+.answers button>span{flex:0 0 auto;font-family:Arial,sans-serif;font-size:20px;background:#4cb594;color:#123e2d;padding:10px 15px}
+.answers button>b{flex:0 0 auto}
+.question-content .answers button:hover{background:#e0f4eb;border-color:#248460;box-shadow:0 3px 12px #1c765518}
+.sector-label{font-family:Arial,sans-serif;font-weight:700;font-size:25px}
+.sector-label tspan:first-child{font-size:30px}
+.wheel-frame{background:#23684f;padding:8px;box-shadow:0 12px 36px #173c3129}
+.wheel-center{border:6px solid #fff;box-shadow:0 4px 18px #123a3033}
+.confetti i{box-shadow:0 1px 3px #173c3133}
+.motion-toggle{border-color:#4cb594;color:#174e3b;font-size:12px}
+.is-result .question-content{gap:12px}
+.question-content .answer-reveal,.explanation-card .explanation{font-family:Arial,sans-serif;font-size:clamp(16px,1.2vw,22px);line-height:1.4}
+@media(max-height:740px){.question-overlay{padding:10px 16px;gap:8px}.question-content{gap:10px}.question-content h2{font-size:26px}.question-content .answers button{font-size:20px;padding:13px;min-height:64px}.question-content .prize-at-stake{padding:9px 12px}.question-content .prize-at-stake strong{font-size:20px}}
+@media(max-width:640px){.question-overlay{padding:8px}.question-content h2{font-size:21px}.question-content .answers button{font-size:17px;padding:12px;gap:10px}.question-content .prize-at-stake{font-size:12px}.header-actions{gap:6px}.motion-toggle{font-size:10px;padding:6px}.event-tag{display:none}}
+
+@media(max-height:740px){.is-result .question-category{display:none}.is-result .question-content{gap:8px}.is-result .question-content h2{font-size:25px}.is-result .awarded-prize{font-size:25px}.is-result .claim-prize{font-size:16px}.is-result .answer-reveal,.is-result .explanation-card .explanation{font-size:16px}.is-result .student-offer{padding:8px 12px}.is-result .result-actions .primary{padding:10px 16px;min-height:40px}}

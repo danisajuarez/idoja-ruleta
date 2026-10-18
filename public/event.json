@@ -404,28 +404,19 @@
       "questions": [
         {
           "text": "¿Cuáles son las medidas de una hoja A3 según la norma ISO 216?",
-          "options": [
-            "297 × 420 mm.",
-            "210 × 297 mm."
-          ],
+          "options": ["297 × 420 mm.", "210 × 297 mm."],
           "answer": 0,
           "explanation": "El formato A3 mide 29,7 × 42 cm. Es el doble de superficie que un A4 y se utiliza habitualmente para láminas, presentaciones y piezas gráficas."
         },
         {
           "text": "Si doblás una hoja A3 por la mitad siguiendo su lado más largo y por el centro, ¿qué formato obtenés?",
-          "options": [
-            "A5, de 148 × 210 mm.",
-            "A4, de 210 × 297 mm."
-          ],
+          "options": ["A5, de 148 × 210 mm.", "A4, de 210 × 297 mm."],
           "answer": 1,
           "explanation": "Cada formato A se obtiene dividiendo por la mitad el formato inmediatamente superior. A3 mide 297 × 420 mm y A4 mide 210 × 297 mm."
         },
         {
           "text": "¿Cuáles son las dimensiones de una hoja A1?",
-          "options": [
-            "594 × 841 mm.",
-            "420 × 594 mm."
-          ],
+          "options": ["594 × 841 mm.", "420 × 594 mm."],
           "answer": 0,
           "explanation": "A1 mide 59,4 × 84,1 cm. Es un formato frecuente para planos arquitectónicos, láminas de presentación y entregas de gran formato. A2 mide 42 × 59,4 cm."
         },
@@ -495,7 +486,7 @@
       ]
     }
   ],
-  "slogan": "convierto tus entregas en trabajos profesionales",
+  "slogan": "Convierto tus entregas en trabajos profesionales",
   "careers": [
     {
       "id": "graphic",
@@ -528,70 +519,49 @@
     {
       "id": "discount10",
       "name": "10% de descuento",
-      "lines": [
-        "10% de",
-        "descuento"
-      ],
+      "lines": ["10% de", "descuento"],
       "color": "#4cb594",
       "weight": 30
     },
     {
       "id": "discount15",
       "name": "15% de descuento",
-      "lines": [
-        "15% de",
-        "descuento"
-      ],
+      "lines": ["15% de", "descuento"],
       "color": "#525252",
       "weight": 23
     },
     {
       "id": "discount20",
       "name": "20% de descuento",
-      "lines": [
-        "20% de",
-        "descuento"
-      ],
+      "lines": ["20% de", "descuento"],
       "color": "#999999",
       "weight": 15
     },
     {
       "id": "stickers",
       "name": "Stickers IDOJA",
-      "lines": [
-        "Stickers",
-        "IDOJA"
-      ],
+      "lines": ["Stickers", "IDOJA"],
       "color": "#4cb594",
       "weight": 20
     },
     {
       "id": "voucher",
       "name": "Voucher de compra $10.000",
-      "lines": [
-        "Voucher de compra",
-        "$10.000"
-      ],
+      "lines": ["Voucher de compra", "$10.000"],
       "color": "#525252",
       "weight": 8
     },
     {
       "id": "discount50",
       "name": "50% de descuento",
-      "lines": [
-        "50% de",
-        "descuento"
-      ],
+      "lines": ["50% de", "descuento"],
       "color": "#999999",
       "weight": 2
     },
     {
       "id": "phoneholder",
       "name": "Porta celular IDOJA",
-      "lines": [
-        "Porta celular",
-        "IDOJA"
-      ],
+      "lines": ["Porta celular", "IDOJA"],
       "color": "#4cb594",
       "weight": 2
     }
@@ -603,25 +573,10 @@
     "benefit": "10% de descuento"
   },
   "careerCategories": {
-    "graphic": [
-      "graphic",
-      "culture",
-      "printing"
-    ],
-    "architecture": [
-      "architecture",
-      "culture",
-      "printing"
-    ],
-    "interiors": [
-      "interiors",
-      "culture",
-      "printing"
-    ],
-    "all": [
-      "culture",
-      "printing"
-    ]
+    "graphic": ["graphic", "culture", "printing"],
+    "architecture": ["architecture", "culture", "printing"],
+    "interiors": ["interiors", "culture", "printing"],
+    "all": ["culture", "printing"]
   },
   "probabilitiesAreProvisional": true
 }

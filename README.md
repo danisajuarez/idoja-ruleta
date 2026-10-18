@@ -33,7 +33,7 @@ The 50 questions, answers and explanations are imported from the client's `pregu
 - `plotty-normal.png`: the supplied waving mascot, displayed during career selection, spin and question.
 - `plotty-thanks.png`: the supplied mascot hugging plans with “GRACIAS POR CONFIAR!”, displayed after every answer, correct or incorrect. The next participant and reset restore normal Plotty. Original transparency and aspect ratio are preserved.
 - `slogan`: the approved brand tagline.
-- `facts`: Plotty's local list of facts; one changes every 12 seconds, including during rounds. “Otro dato” shows another immediately. These are curated local texts, not an online AI chatbot.
+- `facts`: Plotty's local list of facts; one changes every 25 seconds, including during rounds. “Otro dato” shows another immediately. These are curated local texts, not an online AI chatbot.
 - `careers`: four career choices, with `all` labeled “Otra carrera”.
 - `careerCategories`: career ID → allowed category IDs. Each specialty includes its own category plus `culture` and `printing`; `all` includes only `culture` and `printing`. Questions remain in `categories`, without duplicated career banks.
 - `prizes`: seven entries, each with a unique `id`, full `name`, one to three short label `lines` (up to 20 characters each), six-digit hex `color`, and positive numeric `weight`. A prize's appearance probability is its weight divided by the sum of all weights; the phone holder and 50% discount must have identical weights.
@@ -67,9 +67,16 @@ After a wrong answer, an explicit incorrect-answer message appears with the corr
 
 The entire game fits the viewport without page scrolling. On a TV, use landscape full-screen mode at 100% browser zoom. Plotty stays alongside the game on wider displays; compact previews put its bubble beneath the wheel. Questions replace the wheel area during a round. Secondary facts are hidden during spinning and questions to keep attention on the game.
 
-Plotty hosts the game with stage-specific speech and a larger appearance while presenting questions. Launch movement is disabled to reduce distraction; the fact timer continues internally while facts are hidden. Reduced-motion preferences disable mascot movement while retaining the shorter user-triggered wheel spin. These are local animations and prepared messages, not voice generation or an online AI service.
+Plotty hosts the game with stage-specific speech and a larger appearance while presenting questions. Plotty cheers during spinning and after wins; the fact timer continues internally while facts are hidden. Reduced-motion preferences disable mascot movement while retaining the shorter user-triggered wheel spin. These are local animations and prepared messages, not voice generation or an online AI service.
 
 Instagram uses the public handle shown in the supplied IDOJA artwork (`idojaestudiografico`); confirm the profile and scan the QR before the event. Following is explicitly optional and is never checked or required to continue. There is no contact form or personal-data collection. Adding one later requires an explicit storage, access and consent decision; do not collect contact details on a shared TV by default.
 
 Before the event, test the final questions, QR scanning distance, browser zoom, HDMI display and full-screen mode on the actual television.
 
+
+
+## Visual effects and readability
+
+Winning triggers a brief local 60-particle confetti burst and prize reveal. The wheel glows while spinning; Plotty cheers on wins and nods after an incorrect answer. These effects use CSS only. Reduced-motion preferences remain the default; when enabled by the operating system, the header offers ?Activar efectos? as an explicit session-only opt-in. ?Reducir efectos? restores the preference without changing system settings.
+
+Questions replace the wheel in normal layout flow. Long copy remains readable, with internal scrolling as a fallback on smaller screens rather than clipped answers. Wheel labels use short display text; the legend and prize result retain the full prize name.

@@ -11,14 +11,14 @@ test('career comes first and seven prizes follow', async () => { render(<App />)
 test.each([0, 1])('answer %i shows correction and explanation without retries', async (answer) => { render(<App spinDuration={0}/>); await choose(); await question(); expect(screen.getByText('¡Por este premio… responde esta pregunta!')).toBeTruthy(); expect(screen.getByTestId('prize-at-stake').textContent).toContain(data.prizes[0].name); expect(screen.queryByTestId('plotty-fact')).toBeNull(); const buttons = screen.getAllByRole('button', { name: /^[AB] / }); fireEvent.click(buttons[answer]); expect(screen.getByTestId('answer-explanation').textContent).toContain(first().explanation); expect(screen.getByText(first().options[first().answer]).parentElement?.textContent).toContain('La respuesta correcta'); expect(Boolean(screen.queryByTestId('awarded-prize'))).toBe(answer === first().answer); expect(screen.queryByRole('button', { name: /Volver a la ruleta/ })).toBeNull(); expect(screen.getByRole('button', { name: /Siguiente participante/ })).toBe(document.activeElement); if (answer === first().answer)
     expect(screen.getByText(/Retira tu premio en el stand/)).toBeTruthy(); fireEvent.click(screen.getByRole('button', { name: /Siguiente participante/ })); expect(screen.getByRole('heading', { name: '¿Qué carrera estudias?' })).toBeTruthy(); });
 test.each(['Diseño gráfico', 'Arquitectura', 'Diseño de interiores', 'Otra carrera'])('restricts questions for %s', async (name) => { render(<App spinDuration={0}/>); await choose(name); await question(); const career = data.careers.find(c => c.name === name)!; const eligible = data.careerCategories[career.id as keyof typeof data.careerCategories]; const expected = data.categories.find(c => eligible.includes(c.id))!.questions[0]; expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(expected.text); });
-test.each([0, 1, 2, 3, 4, 5, 6])('weighted draw and pointer align for prize %i', async (index) => { const preceding = data.prizes.slice(0, index).reduce((sum, p) => sum + p.weight, 0); const random = (preceding + .01) / 100; expect(drawPrize(data.prizes, random)).toBe(index); vi.mocked(Math.random).mockReturnValueOnce(random).mockReturnValue(0); const { container } = render(<App spinDuration={0}/>); await choose(); await question(); const rotation = Number((container.querySelector('.wheel') as SVGElement).style.transform.match(/[\d.]+/)![0]); expect((rotation + (index + .5) * 360 / 7) % 360).toBeCloseTo(0); expect(screen.getByTestId('prize-at-stake').textContent).toContain(data.prizes[index].name); });
+test.each([0, 1, 2, 3, 4, 5, 6])('weighted draw and pointer align for prize %i', async (index) => { const preceding = data.prizes.slice(0, index).reduce((sum, p) => sum + p.weight, 0); const random = (preceding + .01) / 100; expect(drawPrize(data.prizes, random)).toBe(index); vi.mocked(Math.random).mockReturnValueOnce(random).mockReturnValue(0); const { container } = render(<App spinDuration={0}/>); await choose(); fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/})); const rotation = Number((container.querySelector('.wheel') as SVGElement).style.transform.match(/[\d.]+/)![0]); expect((rotation + (index + .5) * 360 / 7) / 360).toBeCloseTo(Math.round((rotation + (index + .5) * 360 / 7) / 360)); expect((await screen.findByTestId('prize-at-stake')).textContent).toContain(data.prizes[index].name); });
 test('weight boundaries and invalid configuration', () => { expect(drawPrize(data.prizes, 0)).toBe(0); expect(drawPrize(data.prizes, .30)).toBe(1); expect(drawPrize(data.prizes, .999999)).toBe(6); expect(() => validateData({ ...data, prizes: data.prizes.map((p, i) => ({ ...p, weight: i ? p.weight : 0 })) })).toThrow(); expect(() => validateData({ ...data, prizes: data.prizes.map(p => ({ ...p, weight: p.id === 'phoneholder' ? 3 : p.weight })) })).toThrow(); expect(() => validateData({ ...data, careerCategories: { all: ['missing'] } })).toThrow(); expect(() => validateData({ ...data, prizes: [] })).toThrow(); });
 test.each([false, true])('duration and reset respect reduced motion %s', async (reduced) => { const previous = window.matchMedia; window.matchMedia = vi.fn().mockReturnValue({ matches: reduced }); try {
     const { container } = render(<App />);
     await choose();
     vi.useFakeTimers();
     fireEvent.click(screen.getByRole('button', { name: /Girar la ruleta/ }));
-    const duration = reduced ? 1200 : 7000;
+    const duration = reduced ? 1200 : 9000;
     expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe(`${duration}ms`);
     act(() => vi.advanceTimersByTime(duration - 1));
     expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
@@ -36,3 +36,80 @@ finally {
     window.matchMedia = previous;
 } });
 test('Instagram remains optional with local QR and legacy prize defaults', async () => { const { prizes, ...legacy } = data; vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...legacy, instagramUrl: 'https://www.instagram.com/idoja/' }) } as Response); render(<App />); const link = await screen.findByRole('link', { name: /Síguenos en Instagram/ }); expect(link.querySelector('svg')).toBeTruthy(); expect(screen.getByText(/Seguirnos es opcional/)).toBeTruthy(); await choose(); expect(screen.getAllByTestId('prize')).toHaveLength(6); });
+
+
+test.each([true, false])('celebration appears only for a win: %s', async (win) => {
+  const { container } = render(<App spinDuration={0}/>);
+  await choose();
+  await question();
+  expect(screen.queryByTestId('confetti')).toBeNull();
+  const answers = screen.getAllByRole('button', { name: /^[AB] / });
+  fireEvent.click(answers[win ? first().answer : 1 - first().answer]);
+  expect(Boolean(screen.queryByTestId('confetti'))).toBe(win);
+  expect(container.querySelector(win ? '.plotty-panel.is-winner' : '.plotty-panel.is-encouraging')).toBeTruthy();
+  if (win) {
+    expect(screen.getByTestId('confetti').getAttribute('aria-hidden')).toBe('true');
+    expect(screen.getByTestId('confetti').children).toHaveLength(60);
+  }
+  fireEvent.click(screen.getByRole('button', { name: /Siguiente participante/ }));
+  expect(screen.queryByTestId('confetti')).toBeNull();
+});
+
+test('lights appear only while the wheel spins', async () => {
+  const { container } = render(<App spinDuration={7000}/>);
+  await choose();
+  expect(container.querySelector('.wheel-frame.is-spinning')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: /Girar la ruleta/ }));
+  expect(container.querySelector('.wheel-frame.is-spinning')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: /Reiniciar/ }));
+  expect(container.querySelector('.wheel-frame.is-spinning')).toBeNull();
+});
+
+
+test('brand slogan is grouped below the logo', async () => {
+  render(<App/>);
+  const logo = await screen.findByAltText(/^IDOJA/);
+  expect(logo.parentElement?.className).toBe('brand-lockup');
+  expect(logo.nextElementSibling?.textContent).toBe(data.slogan);
+});
+
+test('Plotty leaves 25 seconds to read each fact', async () => {
+  vi.useFakeTimers({toFake:['setInterval','clearInterval']});
+  render(<App/>);
+  const fact = await screen.findByTestId('plotty-fact');
+  const initial = fact.textContent;
+  act(() => vi.advanceTimersByTime(24999));
+  expect(fact.textContent).toBe(initial);
+  act(() => vi.advanceTimersByTime(1));
+  expect(fact.textContent).not.toBe(initial);
+});
+
+test('normal spin uses three full turns plus alignment', async () => {
+  const {container} = render(<App spinDuration={0}/>);
+  await choose();
+  fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
+  const rotation = Number((container.querySelector('.wheel') as SVGElement).style.transform.match(/[\d.]+/)![0]);
+  expect(rotation).toBeGreaterThanOrEqual(1080);
+  expect(rotation).toBeLessThan(1440);
+});
+
+
+test('question replaces wheel rather than overlapping it', async () => {
+  const {container}=render(<App spinDuration={0}/>);
+  await choose(); await question();
+  expect(container.querySelector('.wheel-screen')).toBeNull();
+  expect(container.querySelector('.question-overlay')).toBeTruthy();
+});
+
+test('reduced-motion users can explicitly enable game effects', async () => {
+  const previous=window.matchMedia;
+  window.matchMedia=vi.fn().mockReturnValue({matches:true});
+  try {
+    const {container}=render(<App/>);
+    fireEvent.click(await screen.findByRole('button',{name:/Activar efectos/}));
+    expect(container.querySelector('.app-shell.motion-enabled')).toBeTruthy();
+    await choose();
+    fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
+    expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe('9000ms');
+  } finally {window.matchMedia=previous;}
+});
