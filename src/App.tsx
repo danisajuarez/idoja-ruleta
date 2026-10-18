@@ -451,6 +451,7 @@ export default function App({
     interiors: { icon: "▧", description: "Materiales, luz y ambientes" },
     all: { icon: "✳", description: "Preguntas generales de diseño" },
   };
+  const instagramHandle = data.instagramUrl ? `@${new URL(data.instagramUrl).pathname.split("/").filter(Boolean)[0] ?? "Instagram"}` : "";
   const questionOpen = phase === "question" || phase === "result";
   const spotlight = phase === "spinning" || phase === "revealing";
   const hostSpeech =
@@ -468,7 +469,7 @@ export default function App({
               ? `¡Bien hecho! Ganaste ${prize?.name}. ¡Gracias por jugar conmigo!`
               : "Esta vez no fue. ¡Gracias por jugar! Si estudias en la UAI, mira tu beneficio.";
   return (
-    <div className={`app-shell ${motionEnabled ? "motion-enabled" : ""} ${spotlight ? "spotlight-active" : ""}`}>
+    <div className={`app-shell phase-${phase} ${motionEnabled ? "motion-enabled" : ""} ${spotlight ? "spotlight-active" : ""}`}>
       {phase === "result" && correct && (
         <div className="confetti" data-testid="confetti" aria-hidden="true">
           {Array.from({ length: 60 }, (_, i) => (
@@ -737,7 +738,7 @@ export default function App({
           ) : null}
           {questionOpen && (
             <section
-              className={`question-overlay ${phase === "result" ? "is-result" : ""}`}
+              className={`question-overlay ${phase === "result" ? `is-result ${!correct ? "is-incorrect" : ""}` : ""}`}
               aria-label="Pregunta del juego"
             >
               <div className="question-category">
@@ -751,22 +752,37 @@ export default function App({
                     <strong>{prize?.name}</strong>
                   </p>
                 )}
-                <p
-                  className={`step-label ${phase === "result" && !correct ? "answer-error" : ""}`}
-                >
-                  {phase === "question"
-                    ? "PLOTTY TE PREGUNTA · RESPONDE Y GANA"
-                    : correct
-                      ? "¡RESPUESTA CORRECTA!"
-                      : "RESPUESTA INCORRECTA · GRACIAS POR PARTICIPAR"}
-                </p>
-                <h2>
-                  {phase === "question"
-                    ? round!.question.text
-                    : correct
-                      ? "¡Ganaste!"
-                      : "¡Casi! Sigue explorando."}
-                </h2>
+                <div className={phase === "result" ? "result-summary" : "question-title"}>
+                  <p
+                    className={`step-label ${phase === "result" && !correct ? "answer-error" : ""}`}
+                  >
+                    {phase === "question"
+                      ? "PLOTTY TE PREGUNTA · RESPONDE Y GANA"
+                      : correct
+                        ? "¡RESPUESTA CORRECTA!"
+                        : "RESPUESTA INCORRECTA"}
+                  </p>
+                  <h2>
+                    {phase === "question"
+                      ? round!.question.text
+                      : correct
+                        ? "¡Ganaste!"
+                        : "¡Casi! Sigue explorando."}
+                  </h2>
+                  {phase === "result" && correct && (
+                    <>
+                      <p
+                        className="awarded-prize"
+                        data-testid="awarded-prize"
+                      >
+                        {prize?.name}
+                      </p>
+                      <p className="claim-prize">
+                        Retira tu premio en el stand.
+                      </p>
+                    </>
+                  )}
+                </div>
                 {phase === "question" ? (
                   <div className="answers">
                     {round!.question.options.map((option, i) => (
@@ -783,51 +799,42 @@ export default function App({
                   </div>
                 ) : (
                   <>
-                    {correct && (
-                      <>
-                        <p
-                          className="awarded-prize"
-                          data-testid="awarded-prize"
-                        >
-                          {prize?.name}
-                        </p>
-                        <p className="claim-prize">
-                          Retira tu premio en el stand.
-                        </p>
-                      </>
-                    )}
-                    <p className="answer-reveal">
-                      La respuesta correcta es:{" "}
-                      <strong>
-                        {round!.question.options[round!.question.answer]}
-                      </strong>
-                    </p>
-                    <div
-                      className="explanation-card"
-                      data-testid="answer-explanation"
-                    >
-                      <h3>¿Por qué es correcta?</h3>
-                      <p className="explanation">
-                        {round!.question.explanation}
+                    <div className="result-learning">
+                      <p className="answer-reveal">
+                        La respuesta correcta es:{" "}
+                        <strong>
+                          {round!.question.options[round!.question.answer]}
+                        </strong>
                       </p>
-                    </div>
-                    <div className="student-offer" data-testid="student-offer">
-                      <span className="offer-badge">BENEFICIO UAI</span>
-                      <div>
-                        <h3>
-                          {offer.title} <strong>{offer.benefit}</strong>
-                        </h3>
-                        <p>{offer.details}</p>
+                      <div
+                        className="explanation-card"
+                        data-testid="answer-explanation"
+                      >
+                        <h3>¿Por qué es correcta?</h3>
+                        <p className="explanation">
+                          {round!.question.explanation}
+                        </p>
                       </div>
                     </div>
-                    <div className="result-actions">
-                      <button
-                        ref={focusTarget}
-                        className="primary"
-                        onClick={next}
-                      >
-                        Siguiente participante <span>→</span>
-                      </button>
+                    <div className="result-footer">
+                      <div className="student-offer" data-testid="student-offer">
+                        <span className="offer-badge">BENEFICIO UAI</span>
+                        <div>
+                          <h3>
+                            {offer.title} <strong>{offer.benefit}</strong>
+                          </h3>
+                          <p>{offer.details}</p>
+                        </div>
+                      </div>
+                      <div className="result-actions">
+                        <button
+                          ref={focusTarget}
+                          className="primary"
+                          onClick={next}
+                        >
+                          Siguiente participante <span>→</span>
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
@@ -850,7 +857,7 @@ export default function App({
             >
               {hostSpeech}
             </p>
-            {!spotlight && phase !== "question" && (
+            {(phase === "career" || phase === "idle") && (
               <div className="fact-block">
                 <span className="fact-label">¿SABÍAS QUE…?</span>
                 <p data-testid="plotty-fact">
@@ -878,21 +885,21 @@ export default function App({
                 : "Plotty, la mascota de IDOJA"
             }
           />
-          {!spotlight && <div className="social-invite">
-            {data.instagramUrl && (
-              <a
-                className="qr-panel"
-                href={data.instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <QRCodeSVG value={data.instagramUrl} size={88} marginSize={3} />
-                <span>Síguenos en Instagram ↗</span>
+          {!spotlight && data.instagramUrl && <div className="social-invite">
+              <a className="qr-panel" href={data.instagramUrl} target="_blank" rel="noreferrer" aria-label="Síguenos en Instagram">
+                <span className="instagram-brand">
+                  <svg className="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                  </svg>
+                  Instagram
+                </span>
+                <strong className="instagram-cta">Escanea y síguenos</strong>
+                <QRCodeSVG className="instagram-qr" value={data.instagramUrl} size={224} marginSize={4} />
+                <span className="instagram-handle">{instagramHandle}</span>
               </a>
-            )}
-            <p className="social-note">
-              Seguirnos es opcional. No es un requisito para jugar.
-            </p>
+              <p className="social-note">Seguirnos es opcional. No es un requisito para jugar.</p>
           </div>}
         </aside>
       </main>

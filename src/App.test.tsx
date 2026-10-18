@@ -170,3 +170,66 @@ test('unmount during prize reveal clears both timer sources', async ()=>{
   act(()=>vi.advanceTimersByTime(20000));
   expect(screen.queryByRole('heading',{level:2})).toBeNull();
 });
+
+test.each([true, false])('result presentation distinguishes winning: %s', async (winning) => {
+  const { container } = render(<App spinDuration={0} revealDuration={0}/>);
+  await choose();
+  await question();
+  const option = winning ? first().answer : 1 - first().answer;
+  fireEvent.click(screen.getAllByRole('button', { name: /^[AB] / })[option]);
+  expect(Boolean(container.querySelector('.is-result.is-incorrect'))).toBe(!winning);
+  expect(screen.getByTestId('student-offer')).toBeTruthy();
+  expect(screen.getByTestId('answer-explanation').textContent).toContain(first().explanation);
+  expect(Boolean(screen.queryByTestId('awarded-prize'))).toBe(winning);
+  expect(screen.getByRole('button', { name: /Siguiente participante/ })).toBeTruthy();
+  if (!winning) expect(screen.getByText('RESPUESTA INCORRECTA')).toBeTruthy();
+});
+
+test('Instagram QR is larger without changing its destination', async () => {
+  render(<App/>);
+  const link = await screen.findByRole('link', { name: /Síguenos en Instagram/ });
+  expect(link.getAttribute('href')).toBe(data.instagramUrl);
+  expect(link.querySelector('.instagram-qr')?.getAttribute('width')).toBe('224');
+  expect(link.querySelector('.instagram-qr')?.getAttribute('height')).toBe('224');
+});
+
+test.each([true, false])('TV result keeps the essential content and removes competing facts: %s', async (winning) => {
+  const questions = data.categories.flatMap(c => c.questions);
+  const longest = {
+    text: questions.reduce((a, q) => q.text.length > a.length ? q.text : a, ''),
+    options: [0, 1].map(i => questions.reduce((a, q) => q.options[i].length > a.length ? q.options[i] : a, '')),
+    answer: 0,
+    explanation: questions.reduce((a, q) => q.explanation.length > a.length ? q.explanation : a, ''),
+  };
+  vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...data, categories: data.categories.map(c => ({ ...c, questions: [longest] })) }) } as Response);
+  const { container } = render(<App spinDuration={0} revealDuration={0}/>);
+  await choose();
+  await question();
+  expect(screen.getByRole('heading', {level: 2}).textContent).toBe(longest.text);
+  fireEvent.click(screen.getAllByRole('button', { name: /^[AB] / })[winning ? 0 : 1]);
+  expect(screen.getByTestId('answer-explanation').textContent).toContain(longest.explanation);
+  expect(container.querySelector('.result-learning')?.textContent).toContain(longest.options[0]);
+  expect(container.querySelector('.result-footer [data-testid="student-offer"]')).toBeTruthy();
+  expect(screen.queryByTestId('plotty-fact')).toBeNull();
+  expect(Boolean(screen.queryByTestId('awarded-prize'))).toBe(winning);
+  expect(screen.getByRole('button', { name: /Siguiente participante/ })).toBe(document.activeElement);
+});
+
+test('Instagram invitation has its own identity and derives the handle from configuration', async () => {
+  vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...data, instagramUrl: 'https://www.instagram.com/another_studio/' }) } as Response);
+  render(<App/>);
+  const link = await screen.findByRole('link', { name: /Síguenos en Instagram/ });
+  expect(link.querySelector('.instagram-icon')).toBeTruthy();
+  expect(screen.getByText('Escanea y síguenos')).toBeTruthy();
+  expect(screen.getByText('@another_studio')).toBeTruthy();
+  expect(screen.getByText(/Seguirnos es opcional/)).toBeTruthy();
+  expect(link.getAttribute('href')).toBe('https://www.instagram.com/another_studio/');
+});
+
+test('empty Instagram configuration hides the entire invitation', async () => {
+  vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...data, instagramUrl: '' }) } as Response);
+  render(<App/>);
+  await screen.findByRole('heading', { name: '¿Qué carrera estudias?' });
+  expect(screen.queryByRole('link', { name: /Instagram/ })).toBeNull();
+  expect(screen.queryByText('Escanea y síguenos')).toBeNull();
+});
