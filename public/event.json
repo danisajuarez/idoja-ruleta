@@ -7,166 +7,496 @@
     {
       "id": "graphic",
       "name": "Diseño gráfico",
-      "color": "#53b99d",
+      "color": "#4cb594",
       "icon": "Aa",
       "questions": [
         {
-          "text": "¿Qué modelo de color se utiliza habitualmente para impresión?",
+          "text": "¿Qué sistema de color se utiliza habitualmente para imprimir piezas gráficas a color?",
           "options": [
-            "CMYK",
-            "RGB"
-          ],
-          "answer": 0,
-          "explanation": "CMYK combina tintas cian, magenta, amarilla y negra para imprimir."
-        },
-        {
-          "text": "¿Qué es el kerning?",
-          "options": [
-            "El espacio entre líneas",
-            "El ajuste entre pares de letras"
+            "RGB, compuesto por rojo, verde y azul.",
+            "CMYK, compuesto por cian, magenta, amarillo y negro."
           ],
           "answer": 1,
-          "explanation": "El kerning ajusta la separación de pares concretos de caracteres."
+          "explanation": "CMYK es el sistema de tintas sustractivas utilizado en impresión. RGB se usa principalmente en pantallas y dispositivos digitales."
+        },
+        {
+          "text": "¿Qué característica distingue generalmente a una tipografía sans serif?",
+          "options": [
+            "No tiene remates o terminaciones ornamentales en los extremos de sus trazos.",
+            "Siempre presenta pequeños remates en los extremos de todas sus letras."
+          ],
+          "answer": 0,
+          "explanation": "Las tipografías sans serif carecen de los remates característicos de las serif. Esto no significa que sean siempre más legibles: depende del contexto y del uso."
+        },
+        {
+          "text": "¿Cuál es una ventaja principal de los gráficos vectoriales?",
+          "options": [
+            "Pierden definición cada vez que se amplían, porque están formados por píxeles.",
+            "Se pueden ampliar o reducir considerablemente sin perder nitidez, dentro de las limitaciones de su representación y salida."
+          ],
+          "answer": 1,
+          "explanation": "Los vectores se describen mediante trazados y formas matemáticas, por lo que son ideales para logotipos, íconos e ilustraciones escalables."
+        },
+        {
+          "text": "¿Para qué sirve una retícula en diseño editorial?",
+          "options": [
+            "Para organizar textos, imágenes y espacios mediante una estructura que facilita la composición.",
+            "Para reemplazar todas las decisiones de diseño y obligar a que cada página tenga idéntica distribución."
+          ],
+          "answer": 0,
+          "explanation": "La retícula ayuda a mantener orden, alineación y coherencia visual, pero no impide romperla intencionalmente cuando el concepto lo requiere."
+        },
+        {
+          "text": "¿Qué significa jerarquía visual en una pieza gráfica?",
+          "options": [
+            "Que todos los elementos deben tener el mismo tamaño para conservar la armonía.",
+            "Que los elementos se organizan para orientar la atención y comunicar qué información es más importante."
+          ],
+          "answer": 1,
+          "explanation": "El tamaño, el contraste, el color, la ubicación y la tipografía ayudan a establecer un recorrido de lectura."
+        },
+        {
+          "text": "¿Qué es el sangrado en un archivo destinado a impresión?",
+          "options": [
+            "Un margen interior que debe quedar obligatoriamente blanco en todos los diseños.",
+            "Una extensión del diseño más allá de la línea de corte para evitar bordes blancos accidentales después de guillotinar."
+          ],
+          "answer": 1,
+          "explanation": "El sangrado permite que fondos e imágenes lleguen hasta el borde final aunque exista una pequeña variación en el corte."
+        },
+        {
+          "text": "¿Por qué es importante el contraste entre texto y fondo?",
+          "options": [
+            "Porque puede mejorar la legibilidad y ayudar a distinguir la información.",
+            "Porque cuanto menor sea el contraste, más fácil será leer cualquier texto en cualquier tamaño."
+          ],
+          "answer": 0,
+          "explanation": "Un contraste suficiente favorece la lectura y la accesibilidad, especialmente en textos pequeños o para personas con dificultades visuales."
+        },
+        {
+          "text": "¿Qué diferencia hay entre un logotipo y una identidad visual?",
+          "options": [
+            "Son exactamente lo mismo y ambos se limitan a un único símbolo.",
+            "El logotipo es un elemento identificador; la identidad visual incluye además recursos como colores, tipografías, imágenes y criterios de aplicación."
+          ],
+          "answer": 1,
+          "explanation": "La identidad visual es un sistema más amplio que permite que una marca se reconozca de forma coherente en distintos soportes."
+        },
+        {
+          "text": "¿Qué sucede normalmente cuando se amplía demasiado una fotografía de baja resolución?",
+          "options": [
+            "Se generan automáticamente nuevos detalles reales y la imagen siempre mejora.",
+            "Pueden hacerse visibles los píxeles y la imagen puede verse borrosa o pixelada."
+          ],
+          "answer": 1,
+          "explanation": "Las imágenes rasterizadas están formadas por píxeles. Ampliarlas no recupera por sí solo la información que falta."
+        },
+        {
+          "text": "¿Qué es una línea de troquel en el diseño de packaging?",
+          "options": [
+            "Una guía que indica por dónde se debe cortar o plegar el material para obtener la forma final del envase.",
+            "Una línea decorativa que siempre debe imprimirse y quedar visible en el producto terminado."
+          ],
+          "answer": 0,
+          "explanation": "El troquel define la forma y los pliegues del envase. Las líneas técnicas normalmente se preparan para producción y no para quedar impresas como parte del diseño."
         }
       ]
     },
     {
       "id": "architecture",
       "name": "Arquitectura",
-      "color": "#cee7dc",
+      "color": "#525252",
       "icon": "⌂",
       "questions": [
         {
-          "text": "¿Qué elemento transmite las cargas de un edificio al terreno?",
-          "options": [
-            "La cimentación",
-            "La carpintería"
-          ],
-          "answer": 0,
-          "explanation": "La cimentación distribuye las cargas de la estructura al terreno."
-        },
-        {
           "text": "¿Qué representa una planta arquitectónica?",
           "options": [
-            "Una vista aérea sin cortes",
-            "Un corte horizontal del edificio"
+            "La distribución de los espacios de un edificio mediante una sección horizontal imaginaria, representada en dos dimensiones.",
+            "La apariencia exterior de un edificio observada exclusivamente desde la calle."
+          ],
+          "answer": 0,
+          "explanation": "La planta permite comprender la organización de ambientes, muros, puertas, ventanas y circulaciones en un nivel determinado."
+        },
+        {
+          "text": "En un plano a escala 1:100, ¿qué representa 1 cm dibujado?",
+          "options": [
+            "Un metro en la realidad.",
+            "Diez metros en la realidad."
+          ],
+          "answer": 0,
+          "explanation": "En escala 1:100, una unidad en el dibujo equivale a 100 unidades reales. Por eso, 1 cm representa 100 cm, es decir, 1 metro."
+        },
+        {
+          "text": "¿Qué información muestra principalmente una vista o elevación arquitectónica?",
+          "options": [
+            "La distribución de los ambientes observados desde arriba.",
+            "La configuración vertical de una fachada o de un espacio, incluyendo alturas y aberturas visibles desde una dirección determinada."
           ],
           "answer": 1,
-          "explanation": "La planta muestra la distribución mediante un corte horizontal."
+          "explanation": "Las elevaciones permiten estudiar proporciones, alturas, ventanas, puertas y composición de las fachadas."
+        },
+        {
+          "text": "¿Para qué sirve un corte arquitectónico?",
+          "options": [
+            "Para mostrar únicamente los colores elegidos para las paredes.",
+            "Para representar el edificio como si se lo atravesara mediante un plano de corte, mostrando relaciones verticales y elementos interiores."
+          ],
+          "answer": 1,
+          "explanation": "Los cortes ayudan a comprender alturas, niveles, escaleras, cubiertas y relaciones entre los espacios."
+        },
+        {
+          "text": "¿Por qué es importante indicar el norte en un plano de emplazamiento?",
+          "options": [
+            "Porque ayuda a interpretar la orientación del proyecto respecto del sol, los vientos y el entorno.",
+            "Porque indica automáticamente dónde deben ubicarse todos los accesos, sin importar las condiciones del terreno."
+          ],
+          "answer": 0,
+          "explanation": "La orientación es una referencia importante para analizar asoleamiento, iluminación natural, ventilación y condiciones del sitio, aunque no determina por sí sola el diseño."
+        },
+        {
+          "text": "¿Cuál es la función principal de una estructura en un edificio?",
+          "options": [
+            "Definir únicamente la decoración y los colores de los ambientes.",
+            "Soportar y transmitir las cargas de manera segura hacia los apoyos y el terreno, según el sistema estructural."
+          ],
+          "answer": 1,
+          "explanation": "Columnas, vigas, losas, muros estructurales y fundaciones pueden formar parte del sistema que mantiene estable la construcción."
+        },
+        {
+          "text": "¿Qué busca el diseño bioclimático en arquitectura?",
+          "options": [
+            "Aprovechar las condiciones climáticas del lugar para mejorar el confort y reducir la demanda de energía.",
+            "Ignorar el clima y depender siempre de sistemas mecánicos de climatización."
+          ],
+          "answer": 0,
+          "explanation": "Considera orientación, ventilación natural, protección solar, aislación y otras estrategias adaptadas al entorno."
+        },
+        {
+          "text": "¿Cuál es la función de las fundaciones de una construcción?",
+          "options": [
+            "Elegir la distribución del mobiliario y los equipamientos interiores.",
+            "Transmitir las cargas de la estructura al suelo de manera compatible con las condiciones del terreno y el proyecto."
+          ],
+          "answer": 1,
+          "explanation": "Las fundaciones permiten transferir las cargas al terreno y deben diseñarse considerando el suelo, las cargas y otros factores técnicos."
+        },
+        {
+          "text": "¿Para qué sirve una maqueta arquitectónica?",
+          "options": [
+            "Para estudiar y comunicar aspectos espaciales, volumétricos y formales de un proyecto.",
+            "Para reemplazar siempre todos los planos técnicos, cálculos y documentación de obra."
+          ],
+          "answer": 0,
+          "explanation": "Una maqueta facilita la comprensión tridimensional, pero no sustituye la documentación técnica necesaria para construir."
+        },
+        {
+          "text": "¿Qué significa incorporar criterios de sustentabilidad en un proyecto arquitectónico?",
+          "options": [
+            "Utilizar siempre vidrio en todas las fachadas, independientemente del clima o del consumo energético.",
+            "Considerar el impacto ambiental del proyecto a lo largo de su ciclo de vida, incluyendo materiales, energía, agua y condiciones de uso."
+          ],
+          "answer": 1,
+          "explanation": "La sustentabilidad implica tomar decisiones integrales que contemplen el ambiente, el funcionamiento del edificio y sus efectos a largo plazo."
         }
       ]
     },
     {
       "id": "interiors",
       "name": "Diseño de interiores",
-      "color": "#9ecfbd",
+      "color": "#999999",
       "icon": "▧",
       "questions": [
         {
-          "text": "¿Qué busca la ergonomía al diseñar un espacio?",
+          "text": "¿Qué es un moodboard en un proyecto de interiorismo?",
           "options": [
-            "Adaptarlo a las personas",
-            "Priorizar solo la apariencia"
+            "Un tablero de referencias que reúne colores, materiales, imágenes, texturas y otras ideas para definir una dirección visual.",
+            "Un plano estructural que determina por sí solo las dimensiones de las fundaciones de un edificio."
           ],
           "answer": 0,
-          "explanation": "La ergonomía considera comodidad, seguridad y uso humano del espacio."
+          "explanation": "El moodboard ayuda a comunicar la atmósfera y el lenguaje visual que se busca para un espacio antes de concretar todas las decisiones."
         },
         {
-          "text": "¿Cuál es un ejemplo de iluminación de tarea?",
+          "text": "¿Qué efecto puede producir la temperatura de color de la iluminación en un ambiente?",
           "options": [
-            "Una lámpara de lectura",
-            "Una luz puramente decorativa"
+            "No produce ningún efecto perceptible, porque todas las luces se ven exactamente iguales.",
+            "Puede modificar la percepción del ambiente: las luces cálidas suelen sentirse más acogedoras y las frías pueden dar una sensación más estimulante o neutra, según el contexto."
+          ],
+          "answer": 1,
+          "explanation": "La temperatura de color se mide en kelvin y afecta la apariencia de la luz y de los materiales. La experiencia final también depende de la intensidad, la distribución y el uso del espacio."
+        },
+        {
+          "text": "¿Qué se debe considerar al distribuir los muebles de una habitación?",
+          "options": [
+            "La circulación, las dimensiones, las actividades previstas y la relación entre los distintos elementos.",
+            "Colocar todos los muebles pegados a las paredes siempre, sin importar la forma ni el uso del ambiente."
           ],
           "answer": 0,
-          "explanation": "La iluminación de tarea facilita una actividad específica, como leer."
+          "explanation": "Una distribución funcional permite desplazarse cómodamente, utilizar el mobiliario y aprovechar mejor el espacio disponible."
+        },
+        {
+          "text": "¿Qué son los colores complementarios en el círculo cromático tradicional?",
+          "options": [
+            "Los colores que siempre tienen idéntica saturación y luminosidad.",
+            "Los colores ubicados en posiciones opuestas del círculo cromático, como el azul y el naranja en un modelo tradicional."
+          ],
+          "answer": 1,
+          "explanation": "Los complementarios pueden generar contraste visual. Su apariencia depende del modelo cromático y de cómo se utilicen juntos."
+        },
+        {
+          "text": "¿Qué aporta la textura a un espacio interior?",
+          "options": [
+            "Aporta cualidades visuales y táctiles que pueden modificar la percepción de profundidad, calidez y materialidad.",
+            "Sirve únicamente para decorar y nunca influye en la percepción del espacio."
+          ],
+          "answer": 0,
+          "explanation": "La madera, las telas, la piedra y otras superficies contribuyen a construir contrastes, sensaciones y una identidad para el ambiente."
+        },
+        {
+          "text": "¿Qué se entiende por iluminación de tarea?",
+          "options": [
+            "La iluminación que se utiliza exclusivamente para destacar cuadros y objetos decorativos.",
+            "La iluminación destinada a facilitar una actividad específica, como leer, cocinar, estudiar o trabajar."
+          ],
+          "answer": 1,
+          "explanation": "Se planifica según la actividad y debe ofrecer niveles de luz adecuados, reduciendo sombras molestas y deslumbramientos cuando sea posible."
+        },
+        {
+          "text": "¿Qué estrategia puede ayudar a aprovechar mejor un departamento pequeño?",
+          "options": [
+            "Elegir mobiliario multifuncional y planificar el almacenamiento y las circulaciones.",
+            "Incorporar la mayor cantidad posible de muebles grandes para ocupar todos los espacios vacíos."
+          ],
+          "answer": 0,
+          "explanation": "Un diseño eficiente prioriza las necesidades del usuario, el espacio libre para circular y las soluciones que cumplen más de una función."
+        },
+        {
+          "text": "¿Por qué es importante la ergonomía en el diseño de interiores?",
+          "options": [
+            "Porque establece que todos los usuarios deben utilizar muebles con las mismas dimensiones.",
+            "Porque busca adaptar los espacios, muebles y equipamientos a las capacidades y necesidades de las personas que los utilizan."
+          ],
+          "answer": 1,
+          "explanation": "La ergonomía considera dimensiones corporales, postura, comodidad, seguridad y las actividades que se desarrollan en cada ambiente."
+        },
+        {
+          "text": "¿Qué efecto puede generar un espejo grande en un ambiente pequeño?",
+          "options": [
+            "Puede contribuir a ampliar visualmente el espacio y reflejar la luz, según su ubicación.",
+            "Hace que el espacio físico aumente de tamaño y que las paredes se desplacen realmente."
+          ],
+          "answer": 0,
+          "explanation": "Los espejos crean profundidad visual y reflejos, pero no modifican las dimensiones reales del ambiente."
+        },
+        {
+          "text": "¿Qué criterio ayuda a elegir materiales más sustentables para un interior?",
+          "options": [
+            "Seleccionar siempre el material más barato, sin considerar su origen, durabilidad ni mantenimiento.",
+            "Evaluar aspectos como procedencia, vida útil, mantenimiento, posibilidad de reutilización y efectos ambientales durante su ciclo de vida."
+          ],
+          "answer": 1,
+          "explanation": "La sustentabilidad de un material depende de múltiples factores. No alcanza con que tenga apariencia natural o que se anuncie como ecológico."
         }
       ]
     },
     {
       "id": "culture",
       "name": "Cultura del diseño",
-      "color": "#e5e2d9",
+      "color": "#4cb594",
       "icon": "✳",
       "questions": [
         {
-          "text": "¿En qué país se fundó la escuela Bauhaus?",
+          "text": "¿Qué busca principalmente el diseño como disciplina?",
           "options": [
-            "Italia",
-            "Alemania"
-          ],
-          "answer": 1,
-          "explanation": "La Bauhaus fue fundada en Weimar, Alemania, en 1919."
-        },
-        {
-          "text": "¿Qué disciplina se relaciona con Charles y Ray Eames?",
-          "options": [
-            "Diseño de mobiliario",
-            "Astronomía"
+            "Resolver necesidades o problemas mediante decisiones que relacionan función, forma, contexto y experiencia de uso.",
+            "Crear objetos y espacios exclusivamente decorativos, sin considerar las necesidades de las personas."
           ],
           "answer": 0,
-          "explanation": "Charles y Ray Eames son referentes del diseño de mobiliario moderno."
+          "explanation": "El diseño combina pensamiento creativo y resolución de problemas. La estética importa, pero no es su única dimensión."
+        },
+        {
+          "text": "¿Qué caracteriza al proceso de diseño?",
+          "options": [
+            "La obligación de encontrar una única solución inmediatamente, sin realizar pruebas.",
+            "La posibilidad de investigar, generar alternativas, probarlas, evaluar resultados y realizar ajustes."
+          ],
+          "answer": 1,
+          "explanation": "El proceso de diseño suele ser iterativo. Las pruebas y revisiones ayudan a mejorar las soluciones según las necesidades y las restricciones del proyecto."
+        },
+        {
+          "text": "¿Qué estudian los principios de la Gestalt aplicados al diseño?",
+          "options": [
+            "Cómo las personas organizan y perciben visualmente los elementos como conjuntos, relaciones y patrones.",
+            "Cómo calcular exclusivamente la resistencia mecánica de una estructura de hormigón."
+          ],
+          "answer": 0,
+          "explanation": "Principios como proximidad, semejanza, continuidad y figura-fondo ayudan a comprender cómo interpretamos composiciones visuales."
+        },
+        {
+          "text": "¿Para qué sirve un prototipo en un proyecto de diseño?",
+          "options": [
+            "Para demostrar que la primera idea es perfecta y no debe modificarse.",
+            "Para representar o materializar una solución y evaluar aspectos como funcionamiento, dimensiones, comprensión o experiencia de uso."
+          ],
+          "answer": 1,
+          "explanation": "Un prototipo puede ser físico o digital, simple o avanzado. Permite detectar problemas antes de la producción o implementación definitiva."
+        },
+        {
+          "text": "¿Qué significa diseñar teniendo en cuenta la accesibilidad?",
+          "options": [
+            "Considerar las diferentes capacidades y necesidades de las personas para facilitar el acceso, la comprensión y el uso.",
+            "Diseñar exclusivamente para una persona promedio e ignorar las barreras que puedan encontrar otros usuarios."
+          ],
+          "answer": 0,
+          "explanation": "La accesibilidad busca reducir barreras en espacios, productos e información. Sus soluciones concretas varían según el contexto y las necesidades."
+        },
+        {
+          "text": "¿Qué función cumplen los bocetos durante la etapa inicial de un proyecto?",
+          "options": [
+            "Permiten explorar ideas y relaciones de manera rápida antes de definir todos los detalles.",
+            "Son documentos finales obligatorios que no pueden cambiarse durante el desarrollo del proyecto."
+          ],
+          "answer": 0,
+          "explanation": "Los bocetos ayudan a pensar visualmente, comparar alternativas y comunicar conceptos de forma ágil."
+        },
+        {
+          "text": "¿Qué significa el equilibrio en una composición visual o espacial?",
+          "options": [
+            "Que todos los elementos deben ser simétricos y tener exactamente el mismo tamaño.",
+            "Que los elementos se relacionan de manera que generan una sensación de estabilidad o distribución intencional del peso visual."
+          ],
+          "answer": 1,
+          "explanation": "El equilibrio puede ser simétrico o asimétrico. También puede lograrse mediante tamaños, colores, posiciones, formas y espacios diferentes."
+        },
+        {
+          "text": "¿Por qué es importante conocer al usuario antes de diseñar?",
+          "options": [
+            "Porque permite comprender necesidades, hábitos, limitaciones y contexto para tomar decisiones más pertinentes.",
+            "Porque garantiza que el diseñador pueda imponer sus preferencias personales sin investigar ni evaluar alternativas."
+          ],
+          "answer": 0,
+          "explanation": "La investigación permite fundamentar decisiones y detectar problemas reales, aunque no garantiza por sí sola el éxito de un proyecto."
+        },
+        {
+          "text": "¿Qué tienen en común el diseño gráfico, la arquitectura y el diseño de interiores?",
+          "options": [
+            "Que las tres disciplinas utilizan exactamente las mismas herramientas y producen los mismos resultados.",
+            "Que las tres pueden combinar creatividad, análisis de necesidades, decisiones funcionales, comunicación y consideración del contexto."
+          ],
+          "answer": 1,
+          "explanation": "Aunque sus escalas, métodos y entregables son distintos, las tres disciplinas buscan desarrollar soluciones intencionales para personas y situaciones concretas."
+        },
+        {
+          "text": "¿Qué relación existe entre diseño y sustentabilidad?",
+          "options": [
+            "El diseño puede contribuir a reducir impactos ambientales mediante decisiones sobre materiales, procesos, durabilidad, energía y reutilización.",
+            "La sustentabilidad solo depende del color verde utilizado en una pieza gráfica o de la apariencia natural de un edificio u objeto."
+          ],
+          "answer": 0,
+          "explanation": "La sustentabilidad requiere considerar impactos reales y decisiones a lo largo del ciclo de vida, no solamente la estética o el discurso de un proyecto."
         }
       ]
     },
     {
-      "id": "lightning",
-      "name": "Desafío relámpago",
-      "color": "#7cc4af",
-      "icon": "ϟ",
+      "id": "printing",
+      "name": "Impresión, papeles, formatos y color",
+      "color": "#525252",
+      "icon": "▤",
       "questions": [
         {
-          "text": "¿Cuál de estas formas tiene tres lados?",
+          "text": "¿Cuáles son las medidas de una hoja A3 según la norma ISO 216?",
           "options": [
-            "Triángulo",
-            "Hexágono"
+            "297 × 420 mm.",
+            "210 × 297 mm."
           ],
           "answer": 0,
-          "explanation": "Un triángulo tiene tres lados; un hexágono tiene seis."
+          "explanation": "El formato A3 mide 29,7 × 42 cm. Es el doble de superficie que un A4 y se utiliza habitualmente para láminas, presentaciones y piezas gráficas."
         },
         {
-          "text": "¿Qué herramienta sirve para dibujar circunferencias?",
+          "text": "Si doblás una hoja A3 por la mitad siguiendo su lado más largo y por el centro, ¿qué formato obtenés?",
           "options": [
-            "Escuadra",
-            "Compás"
+            "A5, de 148 × 210 mm.",
+            "A4, de 210 × 297 mm."
           ],
           "answer": 1,
-          "explanation": "El compás permite trazar circunferencias de un radio determinado."
-        }
-      ]
-    },
-    {
-      "id": "expert",
-      "name": "Nivel experto",
-      "color": "#b7dacc",
-      "icon": "◇",
-      "questions": [
-        {
-          "text": "En tipografía, ¿qué es una contraforma?",
-          "options": [
-            "El espacio interior de una letra",
-            "El grosor de su trazo"
-          ],
-          "answer": 0,
-          "explanation": "La contraforma es el espacio vacío interior, abierto o cerrado, de un carácter."
+          "explanation": "Cada formato A se obtiene dividiendo por la mitad el formato inmediatamente superior. A3 mide 297 × 420 mm y A4 mide 210 × 297 mm."
         },
         {
-          "text": "¿Cuál de estos elementos trabaja principalmente a tracción?",
+          "text": "¿Cuáles son las dimensiones de una hoja A1?",
           "options": [
-            "Un cable suspendido",
-            "Una columna de hormigón"
+            "594 × 841 mm.",
+            "420 × 594 mm."
           ],
           "answer": 0,
-          "explanation": "Un cable resiste tracción; una columna trabaja principalmente a compresión."
+          "explanation": "A1 mide 59,4 × 84,1 cm. Es un formato frecuente para planos arquitectónicos, láminas de presentación y entregas de gran formato. A2 mide 42 × 59,4 cm."
+        },
+        {
+          "text": "¿Qué modo de color se utiliza habitualmente para preparar archivos destinados a impresión a color?",
+          "options": [
+            "RGB, basado en la mezcla de luz roja, verde y azul.",
+            "CMYK, basado en cian, magenta, amarillo y negro."
+          ],
+          "answer": 1,
+          "explanation": "CMYK es el modelo sustractivo utilizado en impresión convencional. Sin embargo, el flujo de trabajo puede recibir archivos RGB y convertirlos mediante el sistema de gestión de color de la impresora; lo importante es controlar el resultado final."
+        },
+        {
+          "text": "¿Qué diferencia suele haber entre un papel ilustración brillante y un papel obra o bond sin estucar?",
+          "options": [
+            "El ilustración brillante tiene un recubrimiento que favorece una superficie lisa y brillante; el bond suele tener una superficie sin ese recubrimiento y una apariencia más mate.",
+            "El bond siempre produce colores más brillantes y fotografías más saturadas que cualquier papel ilustración."
+          ],
+          "answer": 0,
+          "explanation": "El recubrimiento y el acabado influyen en la reproducción de imágenes, el contraste, la absorción de tinta y la apariencia. El resultado también depende de la calidad y el tipo específico de papel."
+        },
+        {
+          "text": "¿Qué indica el gramaje de un papel, por ejemplo, 180 g/m²?",
+          "options": [
+            "Que cada hoja mide necesariamente 180 micrones de espesor.",
+            "Que un metro cuadrado de ese papel tiene una masa de 180 gramos."
+          ],
+          "answer": 1,
+          "explanation": "El gramaje expresa masa por unidad de superficie, no espesor. Dos papeles con el mismo gramaje pueden tener espesores, rigidez y acabados diferentes."
+        },
+        {
+          "text": "¿Qué resolución suele recomendarse como referencia para fotografías impresas con buen nivel de detalle a tamaño final?",
+          "options": [
+            "Aproximadamente 300 ppp (píxeles por pulgada), como referencia habitual para imágenes observadas de cerca.",
+            "Siempre 10 ppp, porque la impresora crea todos los detalles que faltan sin pérdida de calidad."
+          ],
+          "answer": 0,
+          "explanation": "300 ppp es una referencia frecuente para fotografías y piezas gráficas observadas a corta distancia. En planos y carteles grandes pueden ser adecuadas resoluciones menores, según el tamaño y la distancia de visualización. Los ppp de la imagen no son lo mismo que los dpi de impresión."
+        },
+        {
+          "text": "¿Qué conviene revisar antes de enviar un plano a imprimir para respetar su escala?",
+          "options": [
+            "Que el archivo esté configurado para ajustar automáticamente el plano a cualquier tamaño de papel, sin comprobar las dimensiones.",
+            "Que el tamaño de página y la escala de impresión sean correctos y que no esté activada una opción de ajuste que altere las dimensiones."
+          ],
+          "answer": 1,
+          "explanation": "Las opciones «Ajustar a página» o similares pueden modificar la escala. Para respetar, por ejemplo, 1:100, hay que verificar el tamaño del documento y la configuración de impresión."
+        },
+        {
+          "text": "¿Para qué sirve el sangrado en un archivo de impresión?",
+          "options": [
+            "Para extender fondos e imágenes más allá del borde de corte y evitar que queden líneas blancas por pequeñas variaciones en el guillotinado.",
+            "Para reducir automáticamente el peso del PDF y aumentar su resolución."
+          ],
+          "answer": 0,
+          "explanation": "El sangrado agrega una extensión al diseño fuera del tamaño final de corte. La cantidad necesaria depende del trabajo y de las especificaciones del sistema de impresión y terminación."
+        },
+        {
+          "text": "¿Por qué los colores de una imagen pueden verse diferentes en la pantalla y en el papel impreso?",
+          "options": [
+            "Porque una pantalla emite luz y el papel refleja la luz, además de que sus gamas de color y condiciones de visualización son diferentes.",
+            "Porque RGB y CMYK reproducen exactamente todos los colores visibles y siempre dan el mismo resultado en cualquier dispositivo."
+          ],
+          "answer": 0,
+          "explanation": "La pantalla trabaja con luz y la impresión con tintas o pigmentos. Los perfiles ICC, la calibración, el papel y las condiciones de iluminación ayudan a controlar las diferencias, pero no garantizan una coincidencia absoluta."
         }
       ]
     }
   ],
   "slogan": "convierto tus entregas en trabajos profesionales",
   "careers": [
-    {
-      "id": "all",
-      "name": "Todas las carreras"
-    },
     {
       "id": "graphic",
       "name": "Diseño gráfico"
@@ -178,6 +508,10 @@
     {
       "id": "interiors",
       "name": "Diseño de interiores"
+    },
+    {
+      "id": "all",
+      "name": "Otra carrera"
     }
   ],
   "facts": [
@@ -190,299 +524,104 @@
     "La luz de tarea ilumina una actividad concreta, como dibujar, leer o estudiar.",
     "El espacio en blanco también diseña: ayuda a separar, ordenar y dar protagonismo al contenido."
   ],
-  "careerQuestions": {
-    "graphic": {
-      "graphic": [
-        {
-          "text": "¿Qué modelo de color se utiliza habitualmente para impresión?",
-          "options": [
-            "CMYK",
-            "RGB"
-          ],
-          "answer": 0,
-          "explanation": "CMYK combina tintas cian, magenta, amarilla y negra para imprimir."
-        },
-        {
-          "text": "¿Qué es el kerning?",
-          "options": [
-            "El espacio entre líneas",
-            "El ajuste entre pares de letras"
-          ],
-          "answer": 1,
-          "explanation": "El kerning ajusta la separación de pares concretos de caracteres."
-        }
-      ],
-      "architecture": [
-        {
-          "text": "¿Qué es una retícula en una composición gráfica?",
-          "options": [
-            "Una estructura para ordenar elementos",
-            "Un efecto de desenfoque"
-          ],
-          "answer": 0,
-          "explanation": "Una retícula ayuda a alinear y distribuir textos e imágenes."
-        }
-      ],
-      "interiors": [
-        {
-          "text": "¿Qué ayuda a leer un cartel a distancia?",
-          "options": [
-            "Buen contraste y jerarquía",
-            "Muchos textos pequeños"
-          ],
-          "answer": 0,
-          "explanation": "El contraste y una jerarquía clara facilitan identificar el mensaje principal."
-        }
-      ],
-      "culture": [
-        {
-          "text": "¿En qué país se fundó la escuela Bauhaus?",
-          "options": [
-            "Italia",
-            "Alemania"
-          ],
-          "answer": 1,
-          "explanation": "La Bauhaus fue fundada en Weimar, Alemania, en 1919."
-        }
-      ],
-      "lightning": [
-        {
-          "text": "¿Qué formato puede guardar gráficos vectoriales?",
-          "options": [
-            "SVG",
-            "JPG"
-          ],
-          "answer": 0,
-          "explanation": "SVG describe formas vectoriales; JPG guarda una imagen de píxeles."
-        }
-      ],
-      "expert": [
-        {
-          "text": "En tipografía, ¿qué es una contraforma?",
-          "options": [
-            "El espacio interior de una letra",
-            "El grosor de su trazo"
-          ],
-          "answer": 0,
-          "explanation": "La contraforma es el espacio vacío interior, abierto o cerrado, de un carácter."
-        }
-      ]
-    },
-    "architecture": {
-      "graphic": [
-        {
-          "text": "¿Para qué sirve la jerarquía de líneas en un plano?",
-          "options": [
-            "Para distinguir elementos y cortes",
-            "Para usar siempre el mismo grosor"
-          ],
-          "answer": 0,
-          "explanation": "Los grosores y tipos de línea ayudan a interpretar la información del plano."
-        }
-      ],
-      "architecture": [
-        {
-          "text": "¿Qué elemento transmite las cargas de un edificio al terreno?",
-          "options": [
-            "La cimentación",
-            "La carpintería"
-          ],
-          "answer": 0,
-          "explanation": "La cimentación distribuye las cargas de la estructura al terreno."
-        },
-        {
-          "text": "¿Qué representa una planta arquitectónica?",
-          "options": [
-            "Una vista aérea sin cortes",
-            "Un corte horizontal del edificio"
-          ],
-          "answer": 1,
-          "explanation": "La planta muestra la distribución mediante un corte horizontal."
-        }
-      ],
-      "interiors": [
-        {
-          "text": "¿Qué debe considerar la circulación de un espacio?",
-          "options": [
-            "El paso cómodo de las personas",
-            "Solo el color de las paredes"
-          ],
-          "answer": 0,
-          "explanation": "La circulación organiza recorridos y conexiones entre los espacios."
-        }
-      ],
-      "culture": [
-        {
-          "text": "¿En qué país se fundó la escuela Bauhaus?",
-          "options": [
-            "Italia",
-            "Alemania"
-          ],
-          "answer": 1,
-          "explanation": "La Bauhaus fue fundada en Weimar, Alemania, en 1919."
-        }
-      ],
-      "lightning": [
-        {
-          "text": "En escala 1:100, ¿qué representa 1 cm?",
-          "options": [
-            "1 metro",
-            "100 metros"
-          ],
-          "answer": 0,
-          "explanation": "La escala reduce las medidas reales cien veces: 1 cm equivale a 100 cm reales."
-        }
-      ],
-      "expert": [
-        {
-          "text": "¿Cuál de estos elementos trabaja principalmente a tracción?",
-          "options": [
-            "Un cable suspendido",
-            "Una columna de hormigón"
-          ],
-          "answer": 0,
-          "explanation": "Un cable resiste tracción; una columna trabaja principalmente a compresión."
-        }
-      ]
-    },
-    "interiors": {
-      "graphic": [
-        {
-          "text": "¿Para qué se utiliza un moodboard?",
-          "options": [
-            "Para reunir referencias visuales",
-            "Para calcular cargas estructurales"
-          ],
-          "answer": 0,
-          "explanation": "Un moodboard reúne referencias de colores, materiales y atmósferas."
-        }
-      ],
-      "architecture": [
-        {
-          "text": "¿Qué representa una planta arquitectónica?",
-          "options": [
-            "Una vista aérea sin cortes",
-            "Un corte horizontal del edificio"
-          ],
-          "answer": 1,
-          "explanation": "La planta muestra la distribución mediante un corte horizontal."
-        }
-      ],
-      "interiors": [
-        {
-          "text": "¿Qué busca la ergonomía al diseñar un espacio?",
-          "options": [
-            "Adaptarlo a las personas",
-            "Priorizar solo la apariencia"
-          ],
-          "answer": 0,
-          "explanation": "La ergonomía considera comodidad, seguridad y uso humano del espacio."
-        },
-        {
-          "text": "¿Cuál es un ejemplo de iluminación de tarea?",
-          "options": [
-            "Una lámpara de lectura",
-            "Una luz puramente decorativa"
-          ],
-          "answer": 0,
-          "explanation": "La iluminación de tarea facilita una actividad específica, como leer."
-        }
-      ],
-      "culture": [
-        {
-          "text": "¿Qué disciplina se relaciona con Charles y Ray Eames?",
-          "options": [
-            "Diseño de mobiliario",
-            "Astronomía"
-          ],
-          "answer": 0,
-          "explanation": "Charles y Ray Eames son referentes del diseño de mobiliario moderno."
-        }
-      ],
-      "lightning": [
-        {
-          "text": "¿Qué puede aportar una alfombra a un interior?",
-          "options": [
-            "Absorción de parte del sonido",
-            "Aislamiento acústico total garantizado"
-          ],
-          "answer": 0,
-          "explanation": "Los materiales blandos pueden absorber sonido, pero no garantizan aislamiento total."
-        }
-      ],
-      "expert": [
-        {
-          "text": "¿Qué describe la temperatura de color de una lámpara?",
-          "options": [
-            "La apariencia cálida o fría de su luz",
-            "El calor que emite la bombilla"
-          ],
-          "answer": 0,
-          "explanation": "Se expresa en kelvin y describe el aspecto cromático de la luz."
-        }
-      ]
-    }
-  },
   "prizes": [
     {
-      "name": "Pack de stickers",
-      "id": "stickers",
-      "color": "#53b99d",
-      "lines": [
-        "Pack de",
-        "stickers"
-      ]
-    },
-    {
-      "name": "Impresión A3",
-      "id": "a3",
-      "color": "#cee7dc",
-      "lines": [
-        "Impresión",
-        "A3"
-      ]
-    },
-    {
-      "name": "10% de descuento",
       "id": "discount10",
-      "color": "#9ecfbd",
+      "name": "10% de descuento",
       "lines": [
         "10% de",
         "descuento"
-      ]
+      ],
+      "color": "#4cb594",
+      "weight": 30
     },
     {
-      "name": "Separador de diseño",
-      "id": "bookmark",
-      "color": "#e5e2d9",
+      "id": "discount15",
+      "name": "15% de descuento",
       "lines": [
-        "Separador",
-        "de diseño"
-      ]
+        "15% de",
+        "descuento"
+      ],
+      "color": "#525252",
+      "weight": 23
     },
     {
-      "name": "Lámina A4",
-      "id": "a4",
-      "color": "#7cc4af",
-      "lines": [
-        "Lámina",
-        "A4"
-      ]
-    },
-    {
-      "name": "20% de descuento",
       "id": "discount20",
-      "color": "#b7dacc",
+      "name": "20% de descuento",
       "lines": [
         "20% de",
         "descuento"
-      ]
+      ],
+      "color": "#999999",
+      "weight": 15
+    },
+    {
+      "id": "stickers",
+      "name": "Stickers IDOJA",
+      "lines": [
+        "Stickers",
+        "IDOJA"
+      ],
+      "color": "#4cb594",
+      "weight": 20
+    },
+    {
+      "id": "voucher",
+      "name": "Voucher de compra $10.000",
+      "lines": [
+        "Voucher de compra",
+        "$10.000"
+      ],
+      "color": "#525252",
+      "weight": 8
+    },
+    {
+      "id": "discount50",
+      "name": "50% de descuento",
+      "lines": [
+        "50% de",
+        "descuento"
+      ],
+      "color": "#999999",
+      "weight": 2
+    },
+    {
+      "id": "phoneholder",
+      "name": "Porta celular IDOJA",
+      "lines": [
+        "Porta celular",
+        "IDOJA"
+      ],
+      "color": "#4cb594",
+      "weight": 2
     }
   ],
-  "prizesAreExamples": true,
+  "prizesAreExamples": false,
   "studentOffer": {
     "details": "Un beneficio para estudiantes UAI. Consulta vigencia y condiciones en el stand.",
     "title": "¿Estudias en la UAI?",
     "benefit": "10% de descuento"
-  }
+  },
+  "careerCategories": {
+    "graphic": [
+      "graphic",
+      "culture",
+      "printing"
+    ],
+    "architecture": [
+      "architecture",
+      "culture",
+      "printing"
+    ],
+    "interiors": [
+      "interiors",
+      "culture",
+      "printing"
+    ],
+    "all": [
+      "culture",
+      "printing"
+    ]
+  },
+  "probabilitiesAreProvisional": true
 }

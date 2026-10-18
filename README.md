@@ -22,9 +22,9 @@ The local server binds only to this computer. No internet, accounts, database or
 
 ## Edit event content without rebuilding
 
-Edit `dist/event.json` and refresh the browser. Keep six categories and at least one question in each category. Each question has exactly two `options`, an `answer` (`0` for the first, `1` for the second), and an `explanation`.
+Edit `dist/event.json` and refresh the browser. Keep the five question categories and at least one question in each category. Each question has exactly two `options`, an `answer` (`0` for the first, `1` for the second), and an `explanation`.
 
-The included questions and prizes are sample content for approval before the event. The first screen asks for a career. The wheel shows six prizes, not question categories. A random topic and question are chosen from the selected career's bank after the prize draw. “Desafío relámpago” remains an internal question category, not a timed round.
+The 50 questions, answers and explanations are imported from the client's `preguntas.docx`, with ten questions in each of five categories. The first screen asks for a career. The wheel shows seven real prizes, not question categories. A question is chosen from the selected specialty and the shared culture/printing categories; “Otra carrera” uses only the shared categories.
 
 - `instagramUrl`: leave empty to hide the QR, or enter `https://www.instagram.com/your_profile/`. The QR is generated locally, with no online image service.
 - `logoUrl`: optional extra event logo, e.g. `./event-logo.png` placed in `dist/`.
@@ -34,13 +34,13 @@ The included questions and prizes are sample content for approval before the eve
 - `plotty-thanks.png`: the supplied mascot hugging plans with “GRACIAS POR CONFIAR!”, displayed after every answer, correct or incorrect. The next participant and reset restore normal Plotty. Original transparency and aspect ratio are preserved.
 - `slogan`: the approved brand tagline.
 - `facts`: Plotty's local list of facts; one changes every 12 seconds, including during rounds. “Otro dato” shows another immediately. These are curated local texts, not an online AI chatbot.
-- `careers`: career choices, with `all` for the general question bank.
-- `careerQuestions`: optional career ID → category ID → question array. A missing override uses that category's general questions. Keep all six categories in the general bank.
-- `prizes`: exactly six entries, each with a unique `id`, full `name`, one to three short label `lines` (up to 20 characters each), and a six-digit hex `color`.
-- `prizesAreExamples`: defaults to `true`, displaying “Premios de ejemplo · por confirmar”. Set to `false` only after approving the real prizes. Older JSON without prizes uses clearly marked demo defaults.
+- `careers`: four career choices, with `all` labeled “Otra carrera”.
+- `careerCategories`: career ID → allowed category IDs. Each specialty includes its own category plus `culture` and `printing`; `all` includes only `culture` and `printing`. Questions remain in `categories`, without duplicated career banks.
+- `prizes`: seven entries, each with a unique `id`, full `name`, one to three short label `lines` (up to 20 characters each), six-digit hex `color`, and positive numeric `weight`. A prize's appearance probability is its weight divided by the sum of all weights; the phone holder and 50% discount must have identical weights.
+- `prizesAreExamples`: `false` for the real client prize list. `probabilitiesAreProvisional`: `true` while the proposed distribution awaits review. Unequal appearance probabilities must be disclosed; equal-size wheel sectors do not mean equal chances.
 - `studentOffer`: editable `title`, `benefit`, and `details` for the independent UAI student offer. The default is 10% off for UAI students, with conditions to be confirmed at the stand. It appears after both correct and incorrect answers, without a follow requirement. It is not an inventory item or automatically redeemed coupon.
 
-Demo prizes: sticker pack, A3 print, 10% discount, design bookmark, A4 print, and 20% discount. There is no inventory, redemption tracking or actual prize fulfillment in this offline demo.
+Real prizes and provisional appearance probabilities: 10% discount (30%), 15% discount (23%), 20% discount (15%), IDOJA stickers (20%), $10,000 purchase voucher (8%), 50% discount (2%), and IDOJA phone holder (2%). These are draw probabilities, not guaranteed award rates: a correct answer is required. Confirm validity dates, eligible products, purchase minimums and redemption conditions before the event; none are inferred by the game. There is no inventory, participant registry or redemption tracking.
 
 Montserrat Regular (400) and Semibold (600) are bundled in `public/fonts/Montserrat.ttf`, from the Google Fonts Montserrat distribution. The SIL Open Font License is included in `public/fonts/OFL.txt` and copied into the offline build. No Google Fonts network call is made during use.
 
@@ -59,15 +59,15 @@ Development dependencies need internet to install once. The built `dist/` and `s
 
 ## Play
 
-Choose a career card, then press “Continuar a la ruleta”. Use “Girar la ruleta” or the wheel center. The pointer selects a prize; a two-option question from the chosen career then appears with that prize at stake. A correct answer wins the selected prize. A wrong answer reveals the correction but awards nothing. Each sector has equal probability; prize choice and question choice are independent. Career cards use native buttons with selected state and keyboard support.
+Choose a career card, then press “Continuar a la ruleta”. Use “Girar la ruleta” or the wheel center. The pointer selects a prize; a two-option question from the chosen career then appears with that prize at stake. A correct answer wins the selected prize. A wrong answer reveals the correction but awards nothing. The standard spin lasts seven seconds with final deceleration. Configurable weighted prize choice and question choice are independent. Career cards use native buttons with selected state and keyboard support.
 
 “Cambiar carrera” returns to career selection before spinning. Career changes are blocked during a round. “Siguiente participante” returns to the initial career screen, clearing the selection but preserving session totals. “Reiniciar” clears totals and cancels any active spin, also returning to career selection. Refreshing clears the session. Keyboard users can Tab to a control and press Enter or Space. Reduced-motion preferences use a shorter, single-turn user-triggered spin instead of removing the visual feedback. No personal data or results are saved.
 
-After a wrong answer, an explicit incorrect-answer message appears with the correct option and a highlighted “¿Por qué es correcta?” explanation. “Volver a la ruleta” keeps the selected career and session totals, restores normal Plotty, and allows a fresh draw and question. It does not immediately spin or award anything. Repeated failures may be retried. The next spin avoids repeating the previous question in a topic when that topic has more than one question. Each answered attempt counts as a play. Correct answers show the same highlighted explanation, the won prize and the next-participant action; the failure-only retry control is not shown.
+After a wrong answer, an explicit incorrect-answer message appears with the correct option and explanation, but no prize or retry. Correct answers show the explanation, the won prize and instructions to collect it at the stand. Both outcomes lead to “Siguiente participante”. Each person has one question and one attempt; stand staff enforce one participation per person. The local app cannot identify people or prevent repeat participation after a refresh or a staff reset. The next draw avoids repeating the previous question in a topic when alternatives exist. Each answered attempt counts as a play.
 
-The entire game fits the viewport without page scrolling. On a TV, use landscape full-screen mode at 100% browser zoom. Plotty stays alongside the game on wider displays; compact previews put its bubble beneath the wheel. Questions replace the wheel area during a round, while Plotty continues showing facts.
+The entire game fits the viewport without page scrolling. On a TV, use landscape full-screen mode at 100% browser zoom. Plotty stays alongside the game on wider displays; compact previews put its bubble beneath the wheel. Questions replace the wheel area during a round. Secondary facts are hidden during spinning and questions to keep attention on the game.
 
-Plotty hosts the game with stage-specific speech, a short launch animation, and a larger appearance while presenting questions. The independent fact loop continues. Reduced-motion preferences disable mascot movement while retaining the shorter user-triggered wheel spin. These are local animations and prepared messages, not voice generation or an online AI service.
+Plotty hosts the game with stage-specific speech and a larger appearance while presenting questions. Launch movement is disabled to reduce distraction; the fact timer continues internally while facts are hidden. Reduced-motion preferences disable mascot movement while retaining the shorter user-triggered wheel spin. These are local animations and prepared messages, not voice generation or an online AI service.
 
 Instagram uses the public handle shown in the supplied IDOJA artwork (`idojaestudiografico`); confirm the profile and scan the QR before the event. Following is explicitly optional and is never checked or required to continue. There is no contact form or personal-data collection. Adding one later requires an explicit storage, access and consent decision; do not collect contact details on a shared TV by default.
 

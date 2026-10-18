@@ -4,7 +4,7 @@ import { QRCodeSVG } from 'qrcode.react';
 type Question = {text:string;options:[string,string];answer:0|1;explanation:string};
 type Category = {id:string;name:string;color:string;icon:string;questions:Question[]};
 type Career = {id:string;name:string};
-type Prize = {id:string;name:string;lines:string[];color:string};
+type Prize = {id:string;name:string;lines:string[];color:string;weight?:number};
 const demoPrizes:Prize[]=[
   {id:'stickers',name:'Pack de stickers',lines:['Pack de','stickers'],color:'#53b99d'},
   {id:'a3',name:'Impresión A3',lines:['Impresión','A3'],color:'#cee7dc'},
@@ -16,7 +16,7 @@ const demoPrizes:Prize[]=[
 type EventData = {
   title:string;subtitle:string;instagramUrl:string;logoUrl:string;categories:Category[];
   slogan?:string;careers?:Career[];facts?:string[];careerQuestions?:Record<string,Record<string,Question[]>>;
-  prizes?:Prize[];prizesAreExamples?:boolean;
+  prizes?:Prize[];prizesAreExamples?:boolean;probabilitiesAreProvisional?:boolean;careerCategories?:Record<string,string[]>;
   studentOffer?:{title:string;benefit:string;details:string};
 };
 function validateQuestions(questions:Question[]){
@@ -30,8 +30,8 @@ function validateQuestions(questions:Question[]){
 export function validateData(value:unknown):EventData{
   const d=value as EventData;
   if(!d||typeof d.title!=='string'||typeof d.subtitle!=='string'||typeof d.logoUrl!=='string'||
-    typeof d.instagramUrl!=='string'||!Array.isArray(d.categories)||d.categories.length!==6)
-    throw Error('Se necesitan seis categorías.');
+    typeof d.instagramUrl!=='string'||!Array.isArray(d.categories)||d.categories.length<1)
+    throw Error('Se necesita al menos una categoría.');
   const ids=new Set<string>();
   for(const c of d.categories){
     if(!c||typeof c.id!=='string'||!c.id||ids.has(c.id)||typeof c.name!=='string'||!c.name.trim()||
@@ -47,13 +47,13 @@ export function validateData(value:unknown):EventData{
     throw Error('Revisa studentOffer.');
   if(d.prizesAreExamples!==undefined&&typeof d.prizesAreExamples!=='boolean') throw Error('Revisa prizesAreExamples.');
   if(d.prizes!==undefined){
-    if(!Array.isArray(d.prizes)||d.prizes.length!==6) throw Error('La ruleta necesita seis premios.');
+    if(!Array.isArray(d.prizes)||d.prizes.length<2) throw Error('La ruleta necesita al menos dos premios.');
     const prizeIds=new Set<string>();
     for(const p of d.prizes){
       if(!p||typeof p.id!=='string'||!p.id||prizeIds.has(p.id)||typeof p.name!=='string'||!p.name.trim()||
         !/^#[a-f\d]{6}$/i.test(p.color)||!Array.isArray(p.lines)||p.lines.length<1||p.lines.length>3||
         p.lines.some(line=>typeof line!=='string'||!line.trim()||line.length>20)) throw Error('Revisa los premios y sus etiquetas.');
-      prizeIds.add(p.id);
+      if(p.weight!==undefined&&(!Number.isFinite(p.weight)||p.weight<=0)) throw Error('Los pesos deben ser positivos y finitos.');prizeIds.add(p.id);
     }
   }
   if(d.careers!==undefined){
@@ -75,10 +75,23 @@ export function validateData(value:unknown):EventData{
       }
     }
   }
+  if(d.probabilitiesAreProvisional!==undefined&&typeof d.probabilitiesAreProvisional!=='boolean')throw Error('Revisa probabilitiesAreProvisional.');
+  const special=d.prizes?.find(p=>p.id==='discount50'),holder=d.prizes?.find(p=>p.id==='phoneholder');
+  if(special&&holder&&(special.weight??1)!==(holder.weight??1))throw Error('El 50% y el porta celular deben tener el mismo peso.');
+  if(d.careerCategories!==undefined){
+    if(!d.careerCategories||typeof d.careerCategories!=='object'||Array.isArray(d.careerCategories))throw Error('Revisa careerCategories.');
+    for(const c of d.careers??[{id:'all'}]){const list=d.careerCategories[c.id];if(!Array.isArray(list)||!list.length||list.some(id=>!ids.has(id))||new Set(list).size!==list.length)throw Error('Revisa las categorías de cada carrera.');}
+    if(Object.keys(d.careerCategories).some(id=>!(d.careers??[{id:'all'}]).some(c=>c.id===id)))throw Error('Carrera desconocida.');
+  }
   return d;
 }
 
-export default function App({spinDuration=4200,factInterval=12000}:{spinDuration?:number;factInterval?:number}){
+export function drawPrize(prizes:Prize[],random=Math.random()){
+  let target=random*prizes.reduce((sum,p)=>sum+(p.weight??1),0);
+  for(let i=0;i<prizes.length;i++){target-=prizes[i].weight??1;if(target<0)return i;}
+  return prizes.length-1;
+}
+export default function App({spinDuration=7000,factInterval=12000}:{spinDuration?:number;factInterval?:number}){
   const [data,setData]=useState<EventData|null>(null);
   const [error,setError]=useState('');
   const [phase,setPhase]=useState<'career'|'idle'|'spinning'|'question'|'result'>('career');
@@ -124,8 +137,10 @@ export default function App({spinDuration=4200,factInterval=12000}:{spinDuration
   function spin(){
     if(!data||!career||locked.current||phase!=='idle')return;
     locked.current=true;
-    const prize=Math.floor(Math.random()*6);
-    const category=Math.floor(Math.random()*6),c=data.categories[category];
+    const prizes=data.prizes??demoPrizes;
+    const prize=drawPrize(prizes);
+    const eligible=data.categories.map((c,i)=>({c,i})).filter(({c})=>!data.careerCategories||data.careerCategories[career].includes(c.id));
+    const {i:category,c}=eligible[Math.floor(Math.random()*eligible.length)];
     const questions=data.careerQuestions?.[career]?.[c.id]??c.questions;
     let index=Math.floor(Math.random()*questions.length);
     const historyKey=`${career}/${c.id}`;
@@ -135,7 +150,7 @@ export default function App({spinDuration=4200,factInterval=12000}:{spinDuration
     const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const duration=reduced?Math.min(spinDuration,1200):spinDuration;
     setAnimationDuration(duration);
-    const target=(360-(prize*60+30))%360;
+    const target=(360-((prize+.5)*360/prizes.length))%360;
     setAngle(previous=>previous+(reduced?360:1800)+((target-(previous%360)+360)%360));
     timer.current=setTimeout(()=>{locked.current=false;setPhase('question');},duration);
   }
@@ -145,10 +160,6 @@ export default function App({spinDuration=4200,factInterval=12000}:{spinDuration
     setScore(s=>({played:s.played+1,correct:s.correct+Number(value===round.question.answer)}));setPhase('result');
   }
   function next(){locked.current=false;setPhase('career');setCareer('');setRound(null);setAnswer(null);}
-  function retry(){
-    if(phase!=='result'||!round||answer===round.question.answer)return;
-    locked.current=false;setRound(null);setAnswer(null);setPhase('idle');
-  }
   function reset(){clearTimeout(timer.current);next();setScore({correct:0,played:0});history.current={};}
   async function fullscreen(){
     try{
@@ -189,7 +200,7 @@ export default function App({spinDuration=4200,factInterval=12000}:{spinDuration
       <section className="play-area" aria-label={phase==='career'?'Selección de carrera':'Ruleta de premios'}>
         <ol className="game-steps" aria-label="Pasos del juego"><li aria-current={phase==='career'?'step':undefined}><span>1</span> Tu carrera</li><li aria-current={phase==='idle'||phase==='spinning'?'step':undefined}><span>2</span> Tu premio</li><li aria-current={questionOpen?'step':undefined}><span>3</span> Tu pregunta</li></ol>
         {phase==='career'?<div className="career-welcome">
-          <div className="welcome-title"><p className="step-label">EMPECEMOS POR TI</p><h1>¿Qué carrera estudias?</h1><p>Elige tu carrera. Gira por un premio.<br/>Responde bien y llévatelo.</p></div>
+          <div className="welcome-title"><p className="step-label">EMPECEMOS POR TI</p><h1>¿Qué carrera estudias?</h1><p>Elige tu carrera. Gira por un premio.<br/>Responde bien y llévatelo.</p><p className="attempt-notice">Un intento por persona · participación controlada por el personal.</p></div>
           <div className="career-cards">{careers.map((c,i)=><button ref={i===0?focusTarget:undefined} key={c.id} aria-pressed={career===c.id} onClick={()=>setCareer(c.id)} aria-label={`${c.name}. ${careerDetails[c.id]?.description??'Preguntas de tu carrera'}`}><span className="career-icon" aria-hidden="true">{careerDetails[c.id]?.icon??'✳'}</span><span className="career-card-copy"><strong>{c.name}</strong><small>{careerDetails[c.id]?.description??'Preguntas de tu carrera'}</small></span><span className="choice-check" aria-hidden="true">{career===c.id?'✓':'→'}</span></button>)}</div>
           <button className="primary welcome-continue" disabled={!career} onClick={()=>{if(career){setPhase('idle');locked.current=false;}}}>Continuar a la ruleta <span>→</span></button>
         </div>:<div className="wheel-screen" inert={questionOpen}>
@@ -199,7 +210,7 @@ export default function App({spinDuration=4200,factInterval=12000}:{spinDuration
             <div className="pointer" aria-hidden="true"/>
             <svg className="wheel" viewBox="0 0 600 600" style={{transform:`rotate(${angle}deg)`,transitionDuration:`${animationDuration}ms`}} aria-hidden="true">
               {prizes.map((c,i)=>{
-                const start=i*Math.PI/3-Math.PI/2,end=start+Math.PI/3,mid=start+Math.PI/6;
+                const sector=2*Math.PI/prizes.length;const start=i*sector-Math.PI/2,end=start+sector,mid=start+sector/2;
                 const x=(a:number,r=288)=>300+r*Math.cos(a),y=(a:number,r=288)=>300+r*Math.sin(a);
                 const lines=c.lines;
                 const labelX=x(mid,192),labelY=y(mid,192);
@@ -212,21 +223,21 @@ export default function App({spinDuration=4200,factInterval=12000}:{spinDuration
           </div>
         </div>
         <div className="spin-controls"><button ref={!questionOpen?focusTarget:undefined} className="primary spin-button" aria-label={phase==='spinning'?'Girando…':'Girar la ruleta con Plotty'} onClick={spin} disabled={phase!=='idle'}>{phase==='spinning'?'¡Plotty está girando!':'¡Plotty, gira!'} <span aria-hidden="true">↻</span></button><p className="wheel-caption" role="status">{phase==='spinning'?'Tu premio está por aparecer…':'Plotty gira la ruleta y te hace una pregunta para ganar.'}</p></div>
-        <div className="category-legend" aria-label="Premios">{prizes.map((p,i)=><div key={p.id} data-testid="prize"><i style={{background:p.color}}/><span>{i+1}. {p.name}</span></div>)}</div>
+        <p className="probability-notice">Los premios tienen distintas probabilidades de aparecer.{data.probabilitiesAreProvisional&&' Distribución provisional: pendiente de confirmación.'}</p><div className="category-legend" aria-label="Premios">{prizes.map((p,i)=><div key={p.id} data-testid="prize"><i style={{background:p.color}}/><span>{i+1}. {p.name}</span></div>)}</div>
         </div>}
         {questionOpen&&<section className={`question-overlay ${phase==='result'?'is-result':''}`} aria-label="Pregunta del juego">
           <div className="question-category">{careers.find(c=>c.id===career)?.name} <span>· Pregunta por tu premio</span></div>
-          <div className="question-content" aria-live="polite">{phase==='question'&&<p className="prize-at-stake" data-testid="prize-at-stake">Responde por: <strong>{prize?.name}</strong></p>}<p className={`step-label ${phase==='result'&&!correct?'answer-error':''}`}>{phase==='question'?'PLOTTY TE PREGUNTA · RESPONDE Y GANA':correct?'¡RESPUESTA CORRECTA!':'RESPUESTA INCORRECTA · PUEDES VOLVER A INTENTAR'}</p>
+          <div className="question-content" aria-live="polite">{phase==='question'&&<p className="prize-at-stake" data-testid="prize-at-stake">¡Por este premio… responde esta pregunta! <strong>{prize?.name}</strong></p>}<p className={`step-label ${phase==='result'&&!correct?'answer-error':''}`}>{phase==='question'?'PLOTTY TE PREGUNTA · RESPONDE Y GANA':correct?'¡RESPUESTA CORRECTA!':'RESPUESTA INCORRECTA · GRACIAS POR PARTICIPAR'}</p>
             <h2>{phase==='question'?round!.question.text:correct?'¡Ganaste!':'¡Casi! Sigue explorando.'}</h2>
             {phase==='question'?<div className="answers">{round!.question.options.map((option,i)=><button ref={i===0?focusTarget:undefined} onClick={()=>select(i)} key={i}><span>{i===0?'A':'B'}</span>{option}<b>→</b></button>)}</div>:<>
-              {correct&&<p className="awarded-prize" data-testid="awarded-prize">{prize?.name}</p>}<p className="answer-reveal">La respuesta correcta es: <strong>{round!.question.options[round!.question.answer]}</strong></p><div className="explanation-card" data-testid="answer-explanation"><h3>¿Por qué es correcta?</h3><p className="explanation">{round!.question.explanation}</p></div><div className="student-offer" data-testid="student-offer"><span className="offer-badge">BENEFICIO UAI</span><div><h3>{offer.title} <strong>{offer.benefit}</strong></h3><p>{offer.details}</p></div></div><div className="result-actions">{!correct&&<button ref={focusTarget} className="primary" onClick={retry}>Volver a la ruleta <span>↻</span></button>}<button ref={correct?focusTarget:undefined} className={correct?'primary':'secondary next-participant'} onClick={next}>Siguiente participante <span>→</span></button></div>
+              {correct&&<><p className="awarded-prize" data-testid="awarded-prize">{prize?.name}</p><p className="claim-prize">Retira tu premio en el stand.</p></>}<p className="answer-reveal">La respuesta correcta es: <strong>{round!.question.options[round!.question.answer]}</strong></p><div className="explanation-card" data-testid="answer-explanation"><h3>¿Por qué es correcta?</h3><p className="explanation">{round!.question.explanation}</p></div><div className="student-offer" data-testid="student-offer"><span className="offer-badge">BENEFICIO UAI</span><div><h3>{offer.title} <strong>{offer.benefit}</strong></h3><p>{offer.details}</p></div></div><div className="result-actions"><button ref={focusTarget} className="primary" onClick={next}>Siguiente participante <span>→</span></button></div>
             </>}
           </div>
         </section>}
       </section>
       <aside className={`plotty-panel ${phase==='spinning'?'is-spinning':''} ${phase==='question'?'is-asking':''} ${phase==='result'?'is-celebrating':''}`} aria-label="Plotty, anfitrión del juego">
         <div className="plotty-title"><span className="live-dot"/> PLOTTY, TU ANFITRIÓN</div>
-        <div className="speech-bubble"><p className="host-speech" data-testid="plotty-speech" role="status">{hostSpeech}</p><div className="fact-block"><span className="fact-label">¿SABÍAS QUE…?</span><p data-testid="plotty-fact">{data.facts?.[factIndex]??'El diseño empieza con una buena pregunta.'}</p><button className="fact-next" onClick={nextFact} aria-label="Otro dato curioso">Otro dato <span>↻</span></button></div></div>
+        <div className="speech-bubble"><p className="host-speech" data-testid="plotty-speech" role="status">{hostSpeech}</p>{phase!=='spinning'&&phase!=='question'&&<div className="fact-block"><span className="fact-label">¿SABÍAS QUE…?</span><p data-testid="plotty-fact">{data.facts?.[factIndex]??'El diseño empieza con una buena pregunta.'}</p><button className="fact-next" onClick={nextFact} aria-label="Otro dato curioso">Otro dato <span>↻</span></button></div>}</div>
         <img className={`plotty ${phase==='result'?'plotty-thanks':''}`} src={phase==='result'?'./plotty-thanks.png':'./plotty-normal.png'} alt={phase==='result'?'Plotty abrazando planos: gracias por confiar':'Plotty, la mascota de IDOJA'}/>
         <div className="social-invite">{data.instagramUrl&&<a className="qr-panel" href={data.instagramUrl} target="_blank" rel="noreferrer"><QRCodeSVG value={data.instagramUrl} size={88} marginSize={3}/><span>Síguenos en Instagram ↗</span></a>}<p className="social-note">Seguirnos es opcional. No es un requisito para jugar.</p></div>
       </aside>
