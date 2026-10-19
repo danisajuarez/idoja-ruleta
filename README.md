@@ -40,7 +40,7 @@ The 50 questions, answers and explanations are imported from the client's `pregu
 - `prizesAreExamples`: `false` for the real client prize list. `probabilitiesAreProvisional`: `true` while the proposed distribution awaits review. Unequal appearance probabilities must be disclosed; equal-size wheel sectors do not mean equal chances.
 - `studentOffer`: editable `title`, `benefit`, and `details` for the independent UAI student offer. The default is 10% off for UAI students, with conditions to be confirmed at the stand. It appears after both correct and incorrect answers, without a follow requirement. It is not an inventory item or automatically redeemed coupon.
 
-Real prizes and provisional appearance probabilities: 10% discount (30%), 15% discount (23%), 20% discount (15%), IDOJA stickers (20%), $10,000 purchase voucher (8%), 50% discount (2%), and IDOJA phone holder (2%). These are draw probabilities, not guaranteed award rates: a correct answer is required. Confirm validity dates, eligible products, purchase minimums and redemption conditions before the event; none are inferred by the game. There is no inventory, participant registry or redemption tracking.
+Real prizes and provisional appearance probabilities: 10% discount (30%), 15% discount (23%), 20% discount (15%), IDOJA sticker (20%), $10,000 purchase voucher (8%), 50% discount (2%), and IDOJA phone holder (2%). These are draw probabilities, not guaranteed award rates: a correct answer is required. Confirm validity dates, eligible products, purchase minimums and redemption conditions before the event; none are inferred by the game. There is no inventory, participant registry or redemption tracking.
 
 Montserrat Regular (400) and Semibold (600) are bundled in `public/fonts/Montserrat.ttf`, from the Google Fonts Montserrat distribution. The SIL Open Font License is included in `public/fonts/OFL.txt` and copied into the offline build. No Google Fonts network call is made during use.
 
@@ -73,14 +73,11 @@ Instagram has a separate invitation with its icon, a coloured accent, "Escanea y
 
 Before the event, test the final questions, QR scanning distance, browser zoom, HDMI display and full-screen mode on the actual television.
 
-
-
 ## Visual effects and readability
 
 Winning triggers a brief local 60-particle confetti burst and prize reveal. The wheel glows while spinning; Plotty cheers on wins and nods after an incorrect answer. These effects use CSS only. Reduced-motion preferences remain the default; when enabled by the operating system, the header offers ?Activar efectos? as an explicit session-only opt-in. ?Reducir efectos? restores the preference without changing system settings.
 
 Questions replace the wheel in normal layout flow. Long copy remains readable, with internal scrolling as a fallback on smaller screens rather than clipped answers. Wheel labels use short display text; the legend and prize result retain the full prize name.
-
 
 ## Spotlight spin
 

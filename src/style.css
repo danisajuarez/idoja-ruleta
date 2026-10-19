@@ -61,7 +61,7 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
 .wheel-stage{display:flex;align-items:center;justify-content:center;min-height:0;min-width:0;container-type:size}
 .wheel-frame{position:relative;width:min(94cqw,calc(100cqh - 24px));height:min(94cqw,calc(100cqh - 24px));aspect-ratio:1;flex-shrink:0;padding:9px;background:#1d694e;border-radius:50%;box-shadow:0 0 0 8px #d9ede1,0 16px 40px #13463126}
 .wheel{display:block;width:100%;height:100%;border-radius:50%;transition-property:transform;will-change:transform}
-.wheel,.sector-text{transition-timing-function:cubic-bezier(.25,.1,.25,1)}
+.wheel,.sector-text{transition-timing-function:cubic-bezier(.2,.35,.65,1)}
 .sector-number{display:none}
 .sector-label{font-family:Montserrat,Arial,sans-serif;font-size:25px;font-weight:600;fill:#183e33}
 .sector-label tspan:first-child{font-size:30px}

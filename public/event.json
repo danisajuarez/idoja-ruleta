@@ -537,9 +537,9 @@
       "weight": 15
     },
     {
-      "id": "stickers",
-      "name": "Stickers IDOJA",
-      "lines": ["Stickers", "IDOJA"],
+      "id": "sticker",
+      "name": "sticker IDOJA",
+      "lines": ["sticker", "IDOJA"],
       "color": "#4cb594",
       "weight": 20
     },

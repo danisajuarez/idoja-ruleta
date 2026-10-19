@@ -24,9 +24,9 @@ type Prize = {
 };
 const demoPrizes: Prize[] = [
   {
-    id: "stickers",
-    name: "Pack de stickers",
-    lines: ["Pack de", "stickers"],
+    id: "sticker",
+    name: "Pack de sticker",
+    lines: ["Pack de", "sticker"],
     color: "#53b99d",
   },
   {
@@ -272,7 +272,9 @@ export default function App({
   revealDuration?: number;
 }) {
   const [motionEnabled, setMotionEnabled] = useState(false);
-  const reducedMotion = Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+  const reducedMotion = Boolean(
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+  );
   const [data, setData] = useState<EventData | null>(null);
   const [error, setError] = useState("");
   const [phase, setPhase] = useState<
@@ -451,7 +453,9 @@ export default function App({
     interiors: { icon: "▧", description: "Materiales, luz y ambientes" },
     all: { icon: "✳", description: "Preguntas generales de diseño" },
   };
-  const instagramHandle = data.instagramUrl ? `@${new URL(data.instagramUrl).pathname.split("/").filter(Boolean)[0] ?? "Instagram"}` : "";
+  const instagramHandle = data.instagramUrl
+    ? `@${new URL(data.instagramUrl).pathname.split("/").filter(Boolean)[0] ?? "Instagram"}`
+    : "";
   const questionOpen = phase === "question" || phase === "result";
   const spotlight = phase === "spinning" || phase === "revealing";
   const hostSpeech =
@@ -463,13 +467,15 @@ export default function App({
           ? "¡Voy por ese premio!"
           : phase === "revealing"
             ? `¡Está en juego: ${prize?.name}!`
-          : phase === "question"
-            ? `¡Puedes ganar ${prize?.name}! Yo pregunto, tú eliges la respuesta.`
-            : correct
-              ? `¡Bien hecho! Ganaste ${prize?.name}. ¡Gracias por jugar conmigo!`
-              : "Esta vez no fue. ¡Gracias por jugar! Si estudias en la UAI, mira tu beneficio.";
+            : phase === "question"
+              ? `¡Puedes ganar ${prize?.name}! Yo pregunto, tú eliges la respuesta.`
+              : correct
+                ? `¡Bien hecho! Ganaste ${prize?.name}. ¡Gracias por jugar conmigo!`
+                : "Esta vez no fue. ¡Gracias por jugar! Si estudias en la UAI, mira tu beneficio.";
   return (
-    <div className={`app-shell phase-${phase} ${motionEnabled ? "motion-enabled" : ""} ${spotlight ? "spotlight-active" : ""}`}>
+    <div
+      className={`app-shell phase-${phase} ${motionEnabled ? "motion-enabled" : ""} ${spotlight ? "spotlight-active" : ""}`}
+    >
       {phase === "result" && correct && (
         <div className="confetti" data-testid="confetti" aria-hidden="true">
           {Array.from({ length: 60 }, (_, i) => (
@@ -498,7 +504,16 @@ export default function App({
             {data.slogan ?? "Convierto tus entregas en trabajos profesionales"}
           </p>
         </div>
-        <div className="header-actions">{reducedMotion&&<button className="secondary motion-toggle" onClick={()=>setMotionEnabled(v=>!v)} aria-pressed={motionEnabled}>{motionEnabled?'Reducir efectos':'Activar efectos'}</button>}
+        <div className="header-actions">
+          {reducedMotion && (
+            <button
+              className="secondary motion-toggle"
+              onClick={() => setMotionEnabled((v) => !v)}
+              aria-pressed={motionEnabled}
+            >
+              {motionEnabled ? "Reducir efectos" : "Activar efectos"}
+            </button>
+          )}
           <span className="event-tag">UAI · EN VIVO</span>
           <button
             className="secondary fullscreen"
@@ -517,7 +532,9 @@ export default function App({
           {fullscreenError}
         </div>
       )}
-      <main className={`game-layout ${questionOpen ? "show-question" : ""} ${spotlight ? "is-spotlight" : ""}`}>
+      <main
+        className={`game-layout ${questionOpen ? "show-question" : ""} ${spotlight ? "is-spotlight" : ""}`}
+      >
         <section
           className="play-area"
           aria-label={
@@ -529,9 +546,7 @@ export default function App({
               <span>1</span> Tu carrera
             </li>
             <li
-              aria-current={
-                phase === "idle" || spotlight ? "step" : undefined
-              }
+              aria-current={phase === "idle" || spotlight ? "step" : undefined}
             >
               <span>2</span> Tu premio
             </li>
@@ -608,9 +623,20 @@ export default function App({
                 </button>
               </div>
               <div className="wheel-stage">
-                {spotlight && <div className="spotlight-copy" role="status">
-                  {phase === "revealing" ? <><span>¡Este premio está en juego!</span><strong data-testid="prize-reveal">{prize?.name}</strong></> : <span>Tu premio está en camino…</span>}
-                </div>}
+                {spotlight && (
+                  <div className="spotlight-copy" role="status">
+                    {phase === "revealing" ? (
+                      <>
+                        <span>¡Este premio está en juego!</span>
+                        <strong data-testid="prize-reveal">
+                          {prize?.name}
+                        </strong>
+                      </>
+                    ) : (
+                      <span>Tu premio está en camino…</span>
+                    )}
+                  </div>
+                )}
                 <div
                   className={`wheel-frame ${phase === "spinning" ? "is-spinning" : ""}`}
                 >
@@ -632,7 +658,15 @@ export default function App({
                       const x = (a: number, r = 288) => 300 + r * Math.cos(a),
                         y = (a: number, r = 288) => 300 + r * Math.sin(a);
                       const discount = c.id.match(/^discount(\d+)$/);
-                      const lines = discount ? [`${discount[1]}%`, 'OFF'] : c.id === 'voucher' ? ['$10.000', 'Voucher'] : c.id === 'phoneholder' ? ['Porta', 'celular'] : c.id === 'stickers' ? ['Stickers', 'IDOJA'] : c.lines;
+                      const lines = discount
+                        ? [`${discount[1]}%`, "OFF"]
+                        : c.id === "voucher"
+                          ? ["$10.000", "Voucher"]
+                          : c.id === "phoneholder"
+                            ? ["Porta", "celular"]
+                            : c.id === "sticker"
+                              ? ["sticker", "IDOJA"]
+                              : c.lines;
                       const labelX = x(mid, 192),
                         labelY = y(mid, 192);
                       return (
@@ -752,7 +786,11 @@ export default function App({
                     <strong>{prize?.name}</strong>
                   </p>
                 )}
-                <div className={phase === "result" ? "result-summary" : "question-title"}>
+                <div
+                  className={
+                    phase === "result" ? "result-summary" : "question-title"
+                  }
+                >
                   <p
                     className={`step-label ${phase === "result" && !correct ? "answer-error" : ""}`}
                   >
@@ -771,10 +809,7 @@ export default function App({
                   </h2>
                   {phase === "result" && correct && (
                     <>
-                      <p
-                        className="awarded-prize"
-                        data-testid="awarded-prize"
-                      >
+                      <p className="awarded-prize" data-testid="awarded-prize">
                         {prize?.name}
                       </p>
                       <p className="claim-prize">
@@ -817,7 +852,10 @@ export default function App({
                       </div>
                     </div>
                     <div className="result-footer">
-                      <div className="student-offer" data-testid="student-offer">
+                      <div
+                        className="student-offer"
+                        data-testid="student-offer"
+                      >
                         <span className="offer-badge">BENEFICIO UAI</span>
                         <div>
                           <h3>
@@ -885,22 +923,50 @@ export default function App({
                 : "Plotty, la mascota de IDOJA"
             }
           />
-          {!spotlight && data.instagramUrl && <div className="social-invite">
-              <a className="qr-panel" href={data.instagramUrl} target="_blank" rel="noreferrer" aria-label="Sígueme en Instagram">
+          {!spotlight && data.instagramUrl && (
+            <div className="social-invite">
+              <a
+                className="qr-panel"
+                href={data.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Sígueme en Instagram"
+              >
                 <span className="instagram-brand">
-                  <svg className="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                  <svg
+                    className="instagram-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle
+                      cx="17.5"
+                      cy="6.5"
+                      r="1"
+                      fill="currentColor"
+                      stroke="none"
+                    />
                   </svg>
                   Instagram
                 </span>
                 <strong className="instagram-cta">Escanea y sígueme</strong>
-                <QRCodeSVG className="instagram-qr" value={data.instagramUrl} size={224} marginSize={4} />
+                <QRCodeSVG
+                  className="instagram-qr"
+                  value={data.instagramUrl}
+                  size={224}
+                  marginSize={4}
+                />
                 <span className="instagram-handle">{instagramHandle}</span>
               </a>
-              <p className="social-note">Seguirme es opcional. No es un requisito para jugar.</p>
-          </div>}
+              <p className="social-note">
+                Seguirme es opcional. No es un requisito para jugar.
+              </p>
+            </div>
+          )}
         </aside>
       </main>
       <footer className="app-footer">
