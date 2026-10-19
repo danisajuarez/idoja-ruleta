@@ -18,7 +18,7 @@ test.each([false, true])('duration and reset respect reduced motion %s', async (
     await choose();
     vi.useFakeTimers();
     fireEvent.click(screen.getByRole('button', { name: /Girar la ruleta/ }));
-    const duration = reduced ? 1200 : 9000;
+    const duration = reduced ? 1200 : 12000;
     expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe(`${duration}ms`);
     act(() => vi.advanceTimersByTime(duration - 1));
     expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
@@ -36,7 +36,7 @@ test.each([false, true])('duration and reset respect reduced motion %s', async (
 finally {
     window.matchMedia = previous;
 } });
-test('Instagram remains optional with local QR and legacy prize defaults', async () => { const { prizes, ...legacy } = data; vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...legacy, instagramUrl: 'https://www.instagram.com/idoja/' }) } as Response); render(<App />); const link = await screen.findByRole('link', { name: /Síguenos en Instagram/ }); expect(link.querySelector('svg')).toBeTruthy(); expect(screen.getByText(/Seguirnos es opcional/)).toBeTruthy(); await choose(); expect(screen.getAllByTestId('prize')).toHaveLength(6); });
+test('Instagram remains optional with local QR and legacy prize defaults', async () => { const { prizes, ...legacy } = data; vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...legacy, instagramUrl: 'https://www.instagram.com/idoja/' }) } as Response); render(<App />); const link = await screen.findByRole('link', { name: /Sígueme en Instagram/ }); expect(link.querySelector('svg')).toBeTruthy(); expect(screen.getByText(/Seguirme es opcional/)).toBeTruthy(); await choose(); expect(screen.getAllByTestId('prize')).toHaveLength(6); });
 
 
 test.each([true, false])('celebration appears only for a win: %s', async (win) => {
@@ -111,7 +111,7 @@ test('reduced-motion users can explicitly enable game effects', async () => {
     expect(container.querySelector('.app-shell.motion-enabled')).toBeTruthy();
     await choose();
     fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
-    expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe('9000ms');
+    expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe('12000ms');
   } finally {window.matchMedia=previous;}
 });
 
@@ -126,11 +126,11 @@ test('spotlight reuses wheel and Plotty, then reveals the prize for 1500ms', asy
   expect(container.querySelector('.game-layout.is-spotlight')).toBeTruthy();
   expect(container.querySelector('.wheel')).toBe(wheel);
   expect(container.querySelector('.plotty')).toBe(mascot);
-  expect(screen.getByTestId('plotty-speech').textContent).toBe('\u00a1Vamos por ese premio!');
+  expect(screen.getByTestId('plotty-speech').textContent).toBe('\u00a1Voy por ese premio!');
   expect(screen.queryByTestId('plotty-fact')).toBeNull();
   expect(screen.queryByRole('link',{name:/Instagram/})).toBeNull();
   const calls=vi.mocked(Math.random).mock.calls.length;
-  act(()=>vi.advanceTimersByTime(9000));
+  act(()=>vi.advanceTimersByTime(12000));
   expect(screen.getByTestId('prize-reveal').textContent).toContain(data.prizes[0].name);
   expect(screen.queryByRole('heading',{level:2})).toBeNull();
   fireEvent.click(container.querySelector('.wheel-center')!);
@@ -142,7 +142,7 @@ test('spotlight reuses wheel and Plotty, then reveals the prize for 1500ms', asy
   expect(container.querySelector('.is-spotlight')).toBeNull();
 });
 
-test.each([100,9100])('reset cancels spotlight timers at %ims', async (elapsed)=>{
+test.each([100,12100])('reset cancels spotlight timers at %ims', async (elapsed)=>{
   const {container}=render(<App/>);
   await choose();
   vi.useFakeTimers();
@@ -163,7 +163,7 @@ test('unmount during prize reveal clears both timer sources', async ()=>{
   await choose();
   vi.useFakeTimers();
   fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
-  act(()=>vi.advanceTimersByTime(9000));
+  act(()=>vi.advanceTimersByTime(12000));
   expect(screen.getByTestId('prize-reveal')).toBeTruthy();
   unmount();
   expect(vi.getTimerCount()).toBe(0);
@@ -187,7 +187,7 @@ test.each([true, false])('result presentation distinguishes winning: %s', async 
 
 test('Instagram QR is larger without changing its destination', async () => {
   render(<App/>);
-  const link = await screen.findByRole('link', { name: /Síguenos en Instagram/ });
+  const link = await screen.findByRole('link', { name: /Sígueme en Instagram/ });
   expect(link.getAttribute('href')).toBe(data.instagramUrl);
   expect(link.querySelector('.instagram-qr')?.getAttribute('width')).toBe('224');
   expect(link.querySelector('.instagram-qr')?.getAttribute('height')).toBe('224');
@@ -218,11 +218,11 @@ test.each([true, false])('TV result keeps the essential content and removes comp
 test('Instagram invitation has its own identity and derives the handle from configuration', async () => {
   vi.mocked(fetch).mockResolvedValue({ ok: true, json: async () => ({ ...data, instagramUrl: 'https://www.instagram.com/another_studio/' }) } as Response);
   render(<App/>);
-  const link = await screen.findByRole('link', { name: /Síguenos en Instagram/ });
+  const link = await screen.findByRole('link', { name: /Sígueme en Instagram/ });
   expect(link.querySelector('.instagram-icon')).toBeTruthy();
-  expect(screen.getByText('Escanea y síguenos')).toBeTruthy();
+  expect(screen.getByText('Escanea y sígueme')).toBeTruthy();
   expect(screen.getByText('@another_studio')).toBeTruthy();
-  expect(screen.getByText(/Seguirnos es opcional/)).toBeTruthy();
+  expect(screen.getByText(/Seguirme es opcional/)).toBeTruthy();
   expect(link.getAttribute('href')).toBe('https://www.instagram.com/another_studio/');
 });
 
@@ -231,5 +231,26 @@ test('empty Instagram configuration hides the entire invitation', async () => {
   render(<App/>);
   await screen.findByRole('heading', { name: '¿Qué carrera estudias?' });
   expect(screen.queryByRole('link', { name: /Instagram/ })).toBeNull();
-  expect(screen.queryByText('Escanea y síguenos')).toBeNull();
+  expect(screen.queryByText('Escanea y sígueme')).toBeNull();
+});
+test('welcome uses the requested invitation', async () => { render(<App />); await screen.findByRole('heading', { name: '¿Qué carrera estudias?' }); expect(screen.getByText(/^Elige tu carrera y juguemos\./)).toBeTruthy(); });
+
+test('Plotty presents the seven business messages in order and cycles', async () => {
+  const messages = [
+    'El 90% de mis clientes me eligen por mi calidad de impresión, el otro 10% por la rapidez en la entrega.',
+    'Me especializo en impresiones facultativas con terminación profesional',
+    'Convertí tus entregas en trabajos profesionales',
+    'Atiendo de 6 AM a 1 AM de LUNES a LUNES',
+    'Te asesoro en la elección del papel',
+    'Reviso tus archivos para que salgan bien impresos',
+    'Hago envíos gratis Martes y Jueves a coordinar a la UAI.',
+  ];
+  expect(data.facts).toEqual(messages);
+  render(<App />);
+  const fact = await screen.findByTestId('plotty-fact');
+  for (const message of messages) {
+    expect(fact.textContent).toBe(message);
+    fireEvent.click(screen.getByRole('button', { name: 'Otro dato curioso' }));
+  }
+  expect(fact.textContent).toBe(messages[0]);
 });

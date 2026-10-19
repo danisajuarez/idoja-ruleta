@@ -263,7 +263,7 @@ export function drawPrize(prizes: Prize[], random = Math.random()) {
   return prizes.length - 1;
 }
 export default function App({
-  spinDuration = 9000,
+  spinDuration = 12000,
   factInterval = 25000,
   revealDuration = 1500,
 }: {
@@ -456,11 +456,11 @@ export default function App({
   const spotlight = phase === "spinning" || phase === "revealing";
   const hostSpeech =
     phase === "career"
-      ? "¡Hola! Soy Plotty. Elige tu carrera y jugamos."
+      ? "¡Hola! Soy Plotty. Elige tu carrera y juguemos."
       : phase === "idle"
-        ? "¡Todo listo! Pídeme que gire y busquemos tu premio."
+        ? "¡Todo listo! Pídeme que gire y buscaré tu premio."
         : phase === "spinning"
-          ? "¡Vamos por ese premio!"
+          ? "¡Voy por ese premio!"
           : phase === "revealing"
             ? `¡Está en juego: ${prize?.name}!`
           : phase === "question"
@@ -542,10 +542,10 @@ export default function App({
           {phase === "career" ? (
             <div className="career-welcome">
               <div className="welcome-title">
-                <p className="step-label">EMPECEMOS POR TI</p>
+                <p className="step-label">EMPIEZA POR TU CARRERA</p>
                 <h1>¿Qué carrera estudias?</h1>
                 <p>
-                  Elige tu carrera. Gira por un premio.
+                  Elige tu carrera y juguemos.
                   <br />
                   Responde bien y llévatelo.
                 </p>
@@ -886,7 +886,7 @@ export default function App({
             }
           />
           {!spotlight && data.instagramUrl && <div className="social-invite">
-              <a className="qr-panel" href={data.instagramUrl} target="_blank" rel="noreferrer" aria-label="Síguenos en Instagram">
+              <a className="qr-panel" href={data.instagramUrl} target="_blank" rel="noreferrer" aria-label="Sígueme en Instagram">
                 <span className="instagram-brand">
                   <svg className="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                     <rect x="3" y="3" width="18" height="18" rx="5"/>
@@ -895,11 +895,11 @@ export default function App({
                   </svg>
                   Instagram
                 </span>
-                <strong className="instagram-cta">Escanea y síguenos</strong>
+                <strong className="instagram-cta">Escanea y sígueme</strong>
                 <QRCodeSVG className="instagram-qr" value={data.instagramUrl} size={224} marginSize={4} />
                 <span className="instagram-handle">{instagramHandle}</span>
               </a>
-              <p className="social-note">Seguirnos es opcional. No es un requisito para jugar.</p>
+              <p className="social-note">Seguirme es opcional. No es un requisito para jugar.</p>
           </div>}
         </aside>
       </main>
