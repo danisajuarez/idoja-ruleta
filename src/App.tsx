@@ -974,6 +974,7 @@ export default function App({
           {examples
             ? "Premios de ejemplo · por confirmar"
             : "Diseño en juego × IDOJA"}
+          <small className="creator-credit">Powered by @danisa_juarez</small>
         </span>
         {data.logoUrl && (
           <img

@@ -254,3 +254,10 @@ test('Plotty presents the seven business messages in order and cycles', async ()
   }
   expect(fact.textContent).toBe(messages[0]);
 });
+test('footer shows the creator credit without an interactive link', async () => {
+  render(<App />);
+  const credit = await screen.findByText('Powered by @danisa_juarez');
+  expect(credit.closest('footer')).toBeTruthy();
+  expect(credit.closest('a')).toBeNull();
+  expect(screen.getByText('Diseño en juego × IDOJA')).toBeTruthy();
+});

@@ -137,6 +137,7 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
 .phase-question .instagram-handle{font-size:15px}
 .app-footer{grid-row:3;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:14px;color:#536b5f}
 .app-footer>div{display:flex;align-items:center;gap:22px}
+.creator-credit{display:block;margin-top:3px;font-size:12px;font-weight:400}
 .reset{font-size:13px;padding:6px 10px}
 .extra-logo{max-height:28px;max-width:100px;object-fit:contain}
 .screen-hint{position:fixed;right:24px;top:100px;z-index:80;background:#fff0cc;padding:16px;border-radius:10px;font-size:18px}
