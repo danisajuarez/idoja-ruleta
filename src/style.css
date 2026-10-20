@@ -11,7 +11,7 @@ button:disabled{cursor:not-allowed;opacity:.5}
 button:focus-visible,select:focus-visible,a:focus-visible{outline:4px solid #126748;outline-offset:5px}
 h1,h2,h3,p{margin:0}
 h1,h2,h3{font-weight:600}
-.app-shell{height:100dvh;display:grid;grid-template-rows:94px minmax(0,1fr) 34px;gap:16px;padding:20px 36px 16px 44px;background:radial-gradient(ellipse at 20% 45%,#fff 10%,#f4f8f5 75%);border-left:12px solid var(--idoja-green)}
+.app-shell{height:100dvh;display:grid;grid-template-rows:94px minmax(0,1fr) 64px;gap:16px;padding:20px 36px 16px 44px;background:radial-gradient(ellipse at 20% 45%,#fff 10%,#f4f8f5 75%);border-left:12px solid var(--idoja-green)}
 .app-header{grid-row:1;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 0 16px;border-bottom:2px solid #c6e2d6}
 .brand-lockup{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
 /* Offset the original PNG's 279px transparent left inset without editing the asset. */
@@ -147,7 +147,7 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
 /* Spotlight repositions the existing wheel; no extra draw or duplicate mascot. */
 .spotlight-active::before{content:"";position:fixed;inset:0;background:#123d34d9;backdrop-filter:blur(5px);z-index:40}
 .spotlight-active>.app-header,.spotlight-active>.app-footer{position:relative;z-index:60;background:#f4f8f5;border-radius:12px;padding:8px 16px}
-.game-layout.is-spotlight{position:fixed;inset:140px 4vw 76px;z-index:50;display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,25%);gap:30px;background:radial-gradient(ellipse at 35% 45%,#fff,#e1f3e9);border:2px solid #8dd1b8;border-radius:28px;padding:24px;box-shadow:0 30px 100px #001c3270;animation:spotlight-arrive .35s ease-out both}
+.game-layout.is-spotlight{position:fixed;inset:140px 4vw 100px;z-index:50;display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,25%);gap:30px;background:radial-gradient(ellipse at 35% 45%,#fff,#e1f3e9);border:2px solid #8dd1b8;border-radius:28px;padding:24px;box-shadow:0 30px 100px #001c3270;animation:spotlight-arrive .35s ease-out both}
 .is-spotlight .play-area{display:block;padding:0;overflow:visible}
 .is-spotlight .game-steps,.is-spotlight .play-heading,.is-spotlight .spin-controls,.is-spotlight .probability-notice,.is-spotlight .category-legend{display:none}
 .is-spotlight .wheel-screen{display:block;height:100%}
@@ -175,7 +175,7 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
 
 /* Compact previews keep readable text and allow scrolling rather than clipping. */
 @media(max-width:1500px),(max-height:850px){
-  .app-shell{grid-template-rows:76px minmax(0,1fr) 30px;gap:12px;padding:14px 24px 12px;border-left-width:8px}
+  .app-shell{grid-template-rows:76px minmax(0,1fr) 64px;gap:12px;padding:14px 24px 12px;border-left-width:8px}
   .brand-logo{height:36px}.slogan{font-size:14px}
   .game-layout{grid-template-columns:minmax(0,1fr) 280px;gap:20px}
   .play-area{padding-right:12px;grid-template-rows:30px minmax(0,1fr);gap:8px}
@@ -200,7 +200,7 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
 
 /* Phone previews are an independent compact layout, not a shrunken TV. */
 @media(max-width:760px){
-  .app-shell{grid-template-rows:70px minmax(0,1fr) 28px;gap:8px;padding:8px;border-left-width:4px}
+  .app-shell{grid-template-rows:70px minmax(0,1fr) 64px;gap:8px;padding:8px;border-left-width:4px}
   .app-header{padding:4px 2px 10px;gap:8px}.brand-lockup{max-width:66%;gap:5px}.brand-logo{height:28px}.slogan{font-size:10px}.header-actions{gap:6px}.event-tag,.fullscreen span{display:none}.secondary{font-size:11px;padding:8px}.fullscreen{font-size:20px}.motion-toggle{font-size:9px;max-width:70px}
   .game-layout{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 86px;gap:8px}
   .play-area{padding:0;gap:8px;grid-template-rows:24px minmax(0,1fr)}
@@ -216,7 +216,7 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
   .answer-reveal,.explanation{font-size:20px;line-height:1.4}.explanation-card{padding:12px}.explanation-card h3{font-size:14px}.student-offer h3{font-size:16px}.student-offer p{font-size:12px}.result-actions .primary{font-size:17px;white-space:normal;width:100%}
   .plotty-panel{display:grid;grid-template-columns:minmax(0,1fr) 90px;grid-template-rows:1fr;gap:10px;border:0;border-top:1px solid #c5dace;padding:5px 0 0;overflow:hidden}.speech-bubble{padding:0}.host-speech{font-size:12px;text-align:left}.fact-block,.social-invite{display:none}.plotty{max-height:80px;width:90px;height:80px}
   .app-footer{font-size:9px;gap:6px}.app-footer>div{gap:8px}.reset{font-size:10px;padding:5px}.app-footer>span{max-width:140px}.extra-logo{max-width:45px;max-height:22px}
-  .game-layout.is-spotlight{inset:94px 8px 48px;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) 100px;gap:12px;padding:14px;border-radius:18px}
+  .game-layout.is-spotlight{inset:94px 8px 80px;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) 100px;gap:12px;padding:14px;border-radius:18px}
   .is-spotlight .wheel-stage{gap:12px}.is-spotlight .wheel-frame{width:min(78vw,calc(100dvh - 370px));max-width:460px}.spotlight-copy{min-height:56px;font-size:18px}.spotlight-copy strong{font-size:26px}
   .is-spotlight .plotty-panel{display:flex;flex-direction:row;gap:16px;overflow:visible}.is-spotlight .speech-bubble{max-width:220px}.is-spotlight .host-speech{font-size:18px;text-align:center}.is-spotlight .plotty{width:100px;height:95px;max-height:95px;flex-shrink:0}
 }
