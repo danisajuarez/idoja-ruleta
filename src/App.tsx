@@ -717,11 +717,6 @@ export default function App({
                     : "Plotty gira la ruleta y te hace una pregunta para ganar."}
                 </p>
               </div>
-              <p className="probability-notice">
-                Los premios tienen distintas probabilidades de aparecer.
-                {data.probabilitiesAreProvisional &&
-                  " Distribución provisional: pendiente de confirmación."}
-              </p>
               <div className="category-legend" aria-label="Premios">
                 {prizes.map((p, i) => (
                   <div key={p.id} data-testid="prize">

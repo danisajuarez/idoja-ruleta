@@ -7,6 +7,13 @@ afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); });
 async function choose(name = 'Diseño gráfico') { fireEvent.click(await screen.findByRole('button', { name: new RegExp(`^${name}`) })); fireEvent.click(screen.getByRole('button', { name: /Continuar a la ruleta/ })); }
 async function question() { fireEvent.click(screen.getByRole('button', { name: /Girar la ruleta/ })); await screen.findByRole('heading', { level: 2 }); }
 const first = () => data.categories[0].questions[0];
+
+test('wheel omits the probability notice', async () => {
+  render(<App />);
+  await choose();
+  expect(screen.queryByText(/Los premios tienen distintas probabilidades/)).toBeNull();
+  expect(screen.queryByText(/Distribución provisional/)).toBeNull();
+});
 test('career comes first and seven prizes follow', async () => { render(<App />); await screen.findByRole('heading', { name: '¿Qué carrera estudias?' }); expect(screen.queryByRole('button', { name: /Girar la ruleta/ })).toBeNull(); expect(screen.getByRole('button', { name: /Continuar/ }).hasAttribute('disabled')).toBe(true); expect(screen.getByText(/Un intento por persona/)).toBeTruthy(); await choose(); expect(screen.getAllByTestId('prize')).toHaveLength(7); });
 test.each([0, 1])('answer %i shows correction and explanation without retries', async (answer) => { render(<App spinDuration={0} revealDuration={0}/>); await choose(); await question(); expect(screen.getByText('¡Por este premio… responde esta pregunta!')).toBeTruthy(); expect(screen.getByTestId('prize-at-stake').textContent).toContain(data.prizes[0].name); expect(screen.queryByTestId('plotty-fact')).toBeNull(); const buttons = screen.getAllByRole('button', { name: /^[AB] / }); fireEvent.click(buttons[answer]); expect(screen.getByTestId('answer-explanation').textContent).toContain(first().explanation); expect(screen.getByText(first().options[first().answer]).parentElement?.textContent).toContain('La respuesta correcta'); expect(Boolean(screen.queryByTestId('awarded-prize'))).toBe(answer === first().answer); expect(screen.queryByRole('button', { name: /Volver a la ruleta/ })).toBeNull(); expect(screen.getByRole('button', { name: /Siguiente participante/ })).toBe(document.activeElement); if (answer === first().answer)
     expect(screen.getByText(/Retira tu premio en el stand/)).toBeTruthy(); fireEvent.click(screen.getByRole('button', { name: /Siguiente participante/ })); expect(screen.getByRole('heading', { name: '¿Qué carrera estudias?' })).toBeTruthy(); });
