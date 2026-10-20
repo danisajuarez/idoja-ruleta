@@ -102,17 +102,30 @@ test('question replaces wheel rather than overlapping it', async () => {
   expect(container.querySelector('.question-overlay')).toBeTruthy();
 });
 
-test('reduced-motion users can explicitly enable game effects', async () => {
+test('header omits fullscreen and effects controls while respecting reduced motion', async () => {
   const previous=window.matchMedia;
   window.matchMedia=vi.fn().mockReturnValue({matches:true});
   try {
     const {container}=render(<App/>);
-    fireEvent.click(await screen.findByRole('button',{name:/Activar efectos/}));
-    expect(container.querySelector('.app-shell.motion-enabled')).toBeTruthy();
+    await screen.findByRole('heading', { name: '¿Qué carrera estudias?' });
+    expect(screen.queryByRole('button', { name: /efectos|pantalla completa/i })).toBeNull();
     await choose();
     fireEvent.click(screen.getByRole('button',{name:/Girar la ruleta/}));
-    expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe('12000ms');
+    expect((container.querySelector('.wheel') as SVGElement).style.transitionDuration).toBe('1200ms');
   } finally {window.matchMedia=previous;}
+});
+
+test('shared questions do not repeat consecutively when participants change careers', async () => {
+  render(<App spinDuration={0} revealDuration={0} />);
+  await choose('Otra carrera');
+  await question();
+  const previous = screen.getByRole('heading', { level: 2 }).textContent;
+  fireEvent.click(screen.getAllByRole('button', { name: /^[AB] / })[0]);
+  fireEvent.click(screen.getByRole('button', { name: /Siguiente participante/ }));
+  await choose('Diseño gráfico');
+  vi.mocked(Math.random).mockReturnValueOnce(0).mockReturnValueOnce(0.4).mockReturnValue(0);
+  await question();
+  expect(screen.getByRole('heading', { level: 2 }).textContent).not.toBe(previous);
 });
 
 

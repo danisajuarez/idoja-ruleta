@@ -271,7 +271,6 @@ export default function App({
   factInterval?: number;
   revealDuration?: number;
 }) {
-  const [motionEnabled, setMotionEnabled] = useState(false);
   const reducedMotion = Boolean(
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
   );
@@ -291,11 +290,10 @@ export default function App({
   const [score, setScore] = useState({ correct: 0, played: 0 });
   const [career, setCareer] = useState("");
   const [factIndex, setFactIndex] = useState(0);
-  const [fullscreenError, setFullscreenError] = useState("");
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const locked = useRef(false);
   const history = useRef<Record<string, number>>({});
+  const lastQuestion = useRef<string | null>(null);
   const focusTarget = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     const controller = new AbortController();
@@ -316,11 +314,6 @@ export default function App({
   useEffect(() => {
     focusTarget.current?.focus({ preventScroll: true });
   }, [phase]);
-  useEffect(() => {
-    const sync = () => setIsFullscreen(Boolean(document.fullscreenElement));
-    document.addEventListener("fullscreenchange", sync);
-    return () => document.removeEventListener("fullscreenchange", sync);
-  }, []);
   function nextFact() {
     const length = data?.facts?.length || 1;
     setFactIndex((i) =>
@@ -353,18 +346,26 @@ export default function App({
           !data.careerCategories ||
           data.careerCategories[career].includes(c.id),
       );
-    const { i: category, c } =
-      eligible[Math.floor(Math.random() * eligible.length)];
-    const questions = data.careerQuestions?.[career]?.[c.id] ?? c.questions;
+    const available = eligible.map(({ c, i }) => ({
+      c, i,
+      questions: (data.careerQuestions?.[career]?.[c.id] ?? c.questions)
+        .filter((q) => q.text !== lastQuestion.current),
+    })).filter(({ questions }) => questions.length > 0);
+    const pool = available.length ? available : eligible.map(({ c, i }) => ({
+      c, i, questions: data.careerQuestions?.[career]?.[c.id] ?? c.questions,
+    }));
+    const { i: category, c, questions } = pool[Math.floor(Math.random() * pool.length)];
+    const bank = data.careerQuestions?.[career]?.[c.id] ?? c.questions;
     let index = Math.floor(Math.random() * questions.length);
     const historyKey = `${career}/${c.id}`;
-    if (questions.length > 1 && history.current[historyKey] === index)
+    if (questions.length > 1 && history.current[historyKey] === bank.indexOf(questions[index]))
       index = (index + 1) % questions.length;
-    history.current[historyKey] = index;
+    history.current[historyKey] = bank.indexOf(questions[index]);
+    lastQuestion.current = questions[index].text;
     setRound({ prize, category, question: questions[index] });
     setAnswer(null);
     setPhase("spinning");
-    const reduced = reducedMotion && !motionEnabled;
+    const reduced = reducedMotion;
     const duration = reduced ? Math.min(spinDuration, 1200) : spinDuration;
     setAnimationDuration(duration);
     const target = (360 - ((prize + 0.5) * 360) / prizes.length) % 360;
@@ -404,19 +405,6 @@ export default function App({
     next();
     setScore({ correct: 0, played: 0 });
     history.current = {};
-  }
-  async function fullscreen() {
-    try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else if (document.documentElement.requestFullscreen)
-        await document.documentElement.requestFullscreen();
-      else throw Error();
-      setFullscreenError("");
-    } catch {
-      setFullscreenError(
-        "Activa la pantalla completa desde el menú del navegador.",
-      );
-    }
   }
   if (error)
     return (
@@ -474,7 +462,7 @@ export default function App({
                 : "Esta vez no fue. ¡Gracias por jugar! Si estudias en la UAI, mira tu beneficio.";
   return (
     <div
-      className={`app-shell phase-${phase} ${motionEnabled ? "motion-enabled" : ""} ${spotlight ? "spotlight-active" : ""}`}
+      className={`app-shell phase-${phase} ${spotlight ? "spotlight-active" : ""}`}
     >
       {phase === "result" && correct && (
         <div className="confetti" data-testid="confetti" aria-hidden="true">
@@ -505,33 +493,9 @@ export default function App({
           </p>
         </div>
         <div className="header-actions">
-          {reducedMotion && (
-            <button
-              className="secondary motion-toggle"
-              onClick={() => setMotionEnabled((v) => !v)}
-              aria-pressed={motionEnabled}
-            >
-              {motionEnabled ? "Reducir efectos" : "Activar efectos"}
-            </button>
-          )}
           <span className="event-tag">UAI · EN VIVO</span>
-          <button
-            className="secondary fullscreen"
-            onClick={fullscreen}
-            aria-label={
-              isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"
-            }
-          >
-            {isFullscreen ? "↙" : "⛶"}{" "}
-            <span>{isFullscreen ? "Salir" : "Pantalla completa"}</span>
-          </button>
         </div>
       </header>
-      {fullscreenError && (
-        <div className="screen-hint" role="status">
-          {fullscreenError}
-        </div>
-      )}
       <main
         className={`game-layout ${questionOpen ? "show-question" : ""} ${spotlight ? "is-spotlight" : ""}`}
       >

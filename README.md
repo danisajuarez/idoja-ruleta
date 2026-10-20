@@ -75,10 +75,12 @@ Before the event, test the final questions, QR scanning distance, browser zoom, 
 
 ## Visual effects and readability
 
-Winning triggers a brief local 60-particle confetti burst and prize reveal. The wheel glows while spinning; Plotty cheers on wins and nods after an incorrect answer. These effects use CSS only. Reduced-motion preferences remain the default; when enabled by the operating system, the header offers ?Activar efectos? as an explicit session-only opt-in. ?Reducir efectos? restores the preference without changing system settings.
+Winning triggers a brief local 60-particle confetti burst and prize reveal. The wheel glows while spinning; Plotty cheers on wins and nods after an incorrect answer. These effects use CSS only. Reduced-motion preferences are respected automatically, with no on-screen effects toggle. Use the browser menu for full-screen display; the game has no full-screen button.
 
 Questions replace the wheel in normal layout flow. Long copy remains readable, with internal scrolling as a fallback on smaller screens rather than clipped answers. Wheel labels use short display text; the legend and prize result retain the full prize name.
 
 ## Spotlight spin
 
 During spinning, the existing wheel moves into a foreground stage beside Plotty, with a dimmed background. Facts, QR and secondary text are hidden until the question. The normal spin lasts twelve seconds; the selected prize is then shown for 1.5 seconds before the question. Spin buttons remain locked throughout both stages, and `Reiniciar` cancels either stage. Narrow screens put Plotty below the wheel. Reduced motion keeps the same composition without the entrance zoom or mascot jumps, unless effects are explicitly enabled; its existing shorter wheel spin remains unchanged.
+
+Consecutive rounds avoid the previous question text across career changes, including shared question banks. If the eligible bank contains no alternative, repetition is unavoidable.

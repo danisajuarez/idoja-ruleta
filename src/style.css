@@ -221,6 +221,6 @@ h2{font-size:48px;line-height:1.18;letter-spacing:-.7px;overflow-wrap:anywhere}
   .is-spotlight .plotty-panel{display:flex;flex-direction:row;gap:16px;overflow:visible}.is-spotlight .speech-bubble{max-width:220px}.is-spotlight .host-speech{font-size:18px;text-align:center}.is-spotlight .plotty{width:100px;height:95px;max-height:95px;flex-shrink:0}
 }
 @media(prefers-reduced-motion:reduce){
-  .app-shell:not(.motion-enabled) .confetti{display:none}
-  .app-shell:not(.motion-enabled) .wheel-frame.is-spinning,.app-shell:not(.motion-enabled) .awarded-prize,.app-shell:not(.motion-enabled) .plotty,.app-shell:not(.motion-enabled) .game-layout.is-spotlight{animation:none;transform:none}
+  .app-shell .confetti{display:none}
+  .app-shell .wheel-frame.is-spinning,.app-shell .awarded-prize,.app-shell .plotty,.app-shell .game-layout.is-spotlight{animation:none;transform:none}
 }
